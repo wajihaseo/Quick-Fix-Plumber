@@ -1,444 +1,164 @@
 import React, { useState } from 'react';
 import { 
-  Wrench, 
-  PhoneCall, 
-  Sun, 
-  Moon, 
-  Shield, 
-  Wifi, 
-  WifiOff, 
   Menu, 
   X, 
-  Calendar, 
-  AlertTriangle, 
-  UserCheck,
-  ChevronDown,
-  MapPin,
-  MessageCircle,
-  CheckCircle2
+  ArrowRight,
+  Shield,
+  PhoneCall,
+  User,
+  Sparkles
 } from 'lucide-react';
 import { usePlumbing } from '../context/PlumbingContext';
-import { UserRole } from '../types';
 
 interface NavbarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  onOpenLogin: () => void;
+  onOpenProvider: () => void;
+  onNavigateToAdmin?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
-  const { 
-    isDark, 
-    toggleTheme, 
-    isOnline, 
-    isOfflineSimulated, 
-    toggleSimulateOffline,
-    currentRole, 
-    switchRole,
-    currentUser,
-    openBookingModal,
-    openEmergencyModal,
-    selectedCity,
-    setSelectedCity,
-    openWhatsApp
-  } = usePlumbing();
-
+export const Navbar: React.FC<NavbarProps> = ({ 
+  onOpenLogin, 
+  onOpenProvider 
+}) => {
+  const { openBookingModal } = usePlumbing();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
-  const [isCityDropdownOpen, setIsCityDropdownOpen] = useState(false);
 
-  const effectiveOnline = isOnline && !isOfflineSimulated;
-
-  const CITIES = ['Karachi', 'Lahore', 'Islamabad'];
-
-  const roleOptions: { role: UserRole; label: string; desc: string }[] = [
-    { role: 'customer', label: 'Customer View', desc: 'Browse services, book & view my tickets' },
-    { role: 'dispatcher', label: 'Central Dispatch Desk', desc: 'Live dispatch board, assign field ustads' },
-    { role: 'technician', label: 'Technician View', desc: 'Active assigned field jobs & spare parts' },
-    { role: 'admin', label: 'Administrator Portal', desc: 'Analytics, backups, audit logs, revenue' }
-  ];
+  const scrollToSection = (id: string) => {
+    setIsMobileMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md transition-colors shadow-xs">
-      {/* Top emergency & system quick bar (KwikFix style) */}
-      <div className="bg-slate-950 text-white text-xs px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
-        <div className="flex items-center space-x-3 text-slate-300">
-          <span className="flex items-center font-medium text-emerald-400">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-1.5"></span>
-            Doorstep in 45 Mins in {selectedCity}
-          </span>
-          <span className="hidden md:inline text-slate-600">|</span>
-          <span className="hidden md:inline text-slate-400 flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-sky-400" />
-            NADRA CNIC Verified Staff
-          </span>
-          <span className="hidden lg:inline text-slate-600">|</span>
-          <span className="hidden lg:inline text-slate-400">7-Day Free Rework Guarantee</span>
-        </div>
-
-        <div className="flex items-center space-x-3 ml-auto">
-          {/* Offline simulator status pill */}
-          <button
-            id="offline-toggle-btn"
-            onClick={toggleSimulateOffline}
-            title="Click to toggle offline mode simulation to test data caching"
-            className={`flex items-center space-x-1.5 px-2 py-0.5 rounded text-[11px] font-medium transition-colors ${
-              effectiveOnline 
-                ? 'bg-emerald-950 text-emerald-300 border border-emerald-800 hover:bg-emerald-900' 
-                : 'bg-amber-950 text-amber-300 border border-amber-800 hover:bg-amber-900'
-            }`}
-          >
-            {effectiveOnline ? (
-              <>
-                <Wifi className="w-3 h-3 text-emerald-400" />
-                <span className="hidden sm:inline">Online (Sync Active)</span>
-              </>
-            ) : (
-              <>
-                <WifiOff className="w-3 h-3 text-amber-400" />
-                <span>Offline Mode</span>
-              </>
-            )}
-          </button>
-
-          {/* WhatsApp Direct Chat */}
-          <button
-            onClick={() => openWhatsApp()}
-            className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 font-medium text-[11px]"
-            title="Chat directly on WhatsApp"
-          >
-            <MessageCircle className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">WhatsApp Help</span>
-          </button>
-
-          {/* Quick Hotline direct link */}
-          <a 
-            href="tel:03005945349" 
-            className="flex items-center space-x-1 text-sky-400 hover:text-sky-300 font-semibold tracking-wide"
-          >
-            <PhoneCall className="w-3 h-3" />
-            <span>0300-5945349</span>
-          </a>
-        </div>
-      </div>
-
-      {/* Primary navigation bar */}
+    <header className="sticky top-0 z-40 w-full bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800 transition-colors shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
-          {/* Brand Logo (KwikFix aesthetic) */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
-            <div 
-              onClick={() => setActiveTab('home')}
-              className="flex items-center space-x-2.5 cursor-pointer group select-none"
-            >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
-                <Wrench className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <div className="flex items-center space-x-1.5">
-                  <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-                    Kwik<span className="text-sky-600 dark:text-sky-400">Fix</span>
-                  </span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                    Verified
-                  </span>
-                </div>
-                <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-none">
-                  Plumbing &amp; Home Services
-                </p>
-              </div>
+        <div className="flex items-center justify-between h-18 sm:h-20">
+          
+          {/* Logo matching screenshot: rounded blue badge with K + KWIKFIX.PK + FIND. BOOK. RELAX. */}
+          <div 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center space-x-3 cursor-pointer select-none group"
+          >
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-xl shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+              <span className="font-extrabold tracking-tighter">K</span>
             </div>
-
-            {/* City Selector (KwikFix hallmark) */}
-            <div className="relative">
-              <button
-                id="city-selector-btn"
-                onClick={() => setIsCityDropdownOpen(!isCityDropdownOpen)}
-                className="flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-750 transition-colors"
-                title="Select your city"
-              >
-                <MapPin className="w-3.5 h-3.5 text-rose-500" />
-                <span className="font-semibold">{selectedCity}</span>
-                <ChevronDown className="w-3 h-3 text-slate-400" />
-              </button>
-
-              {isCityDropdownOpen && (
-                <div 
-                  className="absolute left-0 mt-2 w-44 rounded-xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800 py-1.5 z-50 animate-in fade-in zoom-in-95 duration-150"
-                  onMouseLeave={() => setIsCityDropdownOpen(false)}
-                >
-                  <div className="px-3 py-1.5 border-b border-slate-100 dark:border-slate-800 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                    Coverage Area
-                  </div>
-                  {CITIES.map(city => (
-                    <button
-                      key={city}
-                      onClick={() => {
-                        setSelectedCity(city);
-                        setIsCityDropdownOpen(false);
-                      }}
-                      className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between transition-colors ${
-                        selectedCity === city
-                          ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 font-semibold'
-                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
-                      }`}
-                    >
-                      <span className="flex items-center gap-1.5">
-                        <MapPin className="w-3 h-3 text-slate-400" />
-                        {city}
-                      </span>
-                      {selectedCity === city && <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>}
-                    </button>
-                  ))}
-                </div>
-              )}
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+                  KWIKFIX<span className="text-blue-600">.PK</span>
+                </span>
+              </div>
+              <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 -mt-0.5">
+                FIND. BOOK. RELAX.
+              </span>
             </div>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-1">
+          {/* Center navigation links matching screenshot: Services, How It Works, Providers */}
+          <nav className="hidden md:flex items-center space-x-8 text-sm font-semibold text-slate-600 dark:text-slate-300">
             <button
-              id="nav-home"
-              onClick={() => setActiveTab('home')}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === 'home'
-                  ? 'text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 font-semibold'
-                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-              }`}
+              onClick={() => scrollToSection('services-section')}
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
-              Services &amp; Rates
+              Services
             </button>
-
             <button
-              id="nav-emergency"
-              onClick={openEmergencyModal}
-              className="px-3 py-2 rounded-lg text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center space-x-1 transition-colors"
+              onClick={() => scrollToSection('how-it-works-section')}
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
-              <AlertTriangle className="w-4 h-4 text-rose-500 animate-pulse" />
-              <span>45-Min Emergency</span>
+              How It Works
             </button>
-
             <button
-              id="nav-blog"
-              onClick={() => setActiveTab('blog')}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === 'blog'
-                  ? 'text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 font-semibold'
-                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-              }`}
+              onClick={onOpenProvider}
+              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
-              DIY Tips &amp; Guides
-            </button>
-
-            <button
-              id="nav-testimonials"
-              onClick={() => setActiveTab('testimonials')}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === 'testimonials'
-                  ? 'text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 font-semibold'
-                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-              }`}
-            >
-              Verified Reviews
-            </button>
-
-            {/* Portal Tab */}
-            <button
-              id="nav-portal"
-              onClick={() => setActiveTab('admin')}
-              className={`px-3 py-2 rounded-lg text-sm font-medium flex items-center space-x-1.5 transition-colors ${
-                activeTab === 'admin'
-                  ? 'text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/60 font-semibold'
-                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Shield className="w-4 h-4 text-sky-500" />
-              <span>Operations &amp; Admin</span>
+              Providers
             </button>
           </nav>
 
-          {/* Right Action Controls */}
-          <div className="flex items-center space-x-2 sm:space-x-3">
-            {/* WhatsApp Quick Link */}
+          {/* Right actions matching screenshot: Login, Get Started -> */}
+          <div className="hidden md:flex items-center space-x-5">
             <button
-              onClick={() => openWhatsApp()}
-              className="hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold hover:bg-emerald-100 transition-colors"
+              onClick={onOpenLogin}
+              className="text-sm font-bold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>WhatsApp</span>
+              Login
             </button>
 
-            {/* Dark Mode Toggle */}
             <button
-              id="theme-toggle-btn"
-              onClick={toggleTheme}
-              className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none transition-colors"
-              aria-label="Toggle dark mode"
-              title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            >
-              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
-            </button>
-
-            {/* Role Switcher Dropdown */}
-            <div className="relative">
-              <button
-                id="role-switch-btn"
-                onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
-                className="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-750 transition-colors"
-                title="Switch Access Role (RBAC)"
-              >
-                <UserCheck className="w-3.5 h-3.5 text-sky-500" />
-                <span className="capitalize hidden sm:inline">{currentRole}</span>
-                <ChevronDown className="w-3 h-3 text-slate-400" />
-              </button>
-
-              {isRoleDropdownOpen && (
-                <div 
-                  className="absolute right-0 mt-2 w-64 rounded-xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800 py-1.5 z-50 animate-in fade-in zoom-in-95 duration-150"
-                  onMouseLeave={() => setIsRoleDropdownOpen(false)}
-                >
-                  <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
-                    <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      Active: {currentUser.name}
-                    </p>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
-                      Select Role to Test RBAC:
-                    </p>
-                  </div>
-                  {roleOptions.map(opt => (
-                    <button
-                      key={opt.role}
-                      onClick={() => {
-                        switchRole(opt.role);
-                        setIsRoleDropdownOpen(false);
-                      }}
-                      className={`w-full text-left px-3 py-2 text-xs flex flex-col transition-colors ${
-                        currentRole === opt.role
-                          ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 font-semibold'
-                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
-                      }`}
-                    >
-                      <span className="font-semibold flex items-center justify-between">
-                        {opt.label}
-                        {currentRole === opt.role && <span className="text-[10px] bg-sky-500 text-white rounded px-1">Active</span>}
-                      </span>
-                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-normal">
-                        {opt.desc}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Book Service Online Button */}
-            <button
-              id="nav-book-now"
               onClick={() => openBookingModal()}
-              className="hidden sm:flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold shadow-sm shadow-sky-600/30 transition-all hover:shadow"
+              className="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-600/20 transition-all hover:scale-[1.02] flex items-center gap-2"
             >
-              <Calendar className="w-4 h-4" />
-              <span>Book in 60s</span>
+              <span>Get Started</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center space-x-3">
+            <button
+              onClick={() => openBookingModal()}
+              className="px-3.5 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold shadow-xs"
+            >
+              Book
             </button>
 
-            {/* Mobile menu hamburger button */}
             <button
-              id="mobile-menu-btn"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
-              aria-label="Open menu"
+              className="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+              aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6 text-slate-700" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2 shadow-lg">
-          <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
-            <span className="text-xs font-semibold text-slate-500">Selected City:</span>
-            <div className="flex gap-1.5">
-              {CITIES.map(c => (
-                <button
-                  key={c}
-                  onClick={() => setSelectedCity(c)}
-                  className={`text-xs px-2.5 py-1 rounded-md font-medium ${
-                    selectedCity === c ? 'bg-sky-600 text-white font-bold' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
-                  }`}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          </div>
-
+        <div className="md:hidden px-4 pt-3 pb-5 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
           <button
-            onClick={() => {
-              setActiveTab('home');
-              setIsMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+            onClick={() => scrollToSection('services-section')}
+            className="w-full text-left py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600"
           >
-            Services &amp; Pricing
+            Services
+          </button>
+          <button
+            onClick={() => scrollToSection('how-it-works-section')}
+            className="w-full text-left py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600"
+          >
+            How It Works
           </button>
           <button
             onClick={() => {
-              openEmergencyModal();
               setIsMobileMenuOpen(false);
+              onOpenProvider();
             }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center space-x-2"
+            className="w-full text-left py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600"
           >
-            <AlertTriangle className="w-4 h-4" />
-            <span>45-Min Emergency Callout</span>
+            Become a Provider
           </button>
-          <button
-            onClick={() => {
-              setActiveTab('blog');
-              setIsMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-          >
-            Maintenance Tips &amp; Blog
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab('testimonials');
-              setIsMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-          >
-            Customer Reviews
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab('admin');
-              setIsMobileMenuOpen(false);
-            }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-sky-600 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-950/40 flex items-center space-x-2"
-          >
-            <Shield className="w-4 h-4" />
-            <span>Admin &amp; Operations Dashboard</span>
-          </button>
-          
-          <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+          <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
             <button
               onClick={() => {
-                openBookingModal();
                 setIsMobileMenuOpen(false);
+                onOpenLogin();
               }}
-              className="flex-1 py-2.5 rounded-lg bg-sky-600 text-white font-semibold text-center text-sm shadow"
+              className="text-sm font-bold text-slate-700 dark:text-slate-200"
             >
-              Book Service
+              Login (Staff / Owner)
             </button>
+
             <button
               onClick={() => {
-                openWhatsApp();
                 setIsMobileMenuOpen(false);
+                openBookingModal();
               }}
-              className="px-4 py-2.5 rounded-lg bg-emerald-600 text-white font-semibold text-center text-sm shadow flex items-center justify-center"
+              className="px-4 py-2 rounded-lg bg-blue-600 text-white text-xs font-bold shadow"
             >
-              <MessageCircle className="w-4 h-4" />
+              Get Started →
             </button>
           </div>
         </div>

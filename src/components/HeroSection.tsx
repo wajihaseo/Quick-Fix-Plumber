@@ -1,357 +1,338 @@
 import React, { useState } from 'react';
 import { 
+  Search, 
+  MapPin, 
   ShieldCheck, 
   Clock, 
-  BadgeDollarSign, 
+  CheckCircle2, 
   Star, 
-  ArrowRight, 
-  AlertTriangle, 
-  Search,
-  CheckCircle2,
-  Calendar,
+  ArrowRight,
   Wrench,
-  Flame,
-  Activity,
-  Droplets,
+  Zap,
+  Wind,
+  Hammer,
+  Paintbrush,
   Sparkles,
-  MapPin,
-  MessageCircle,
-  PhoneCall,
-  UserCheck,
-  Zap
+  Users,
+  Award,
+  Briefcase
 } from 'lucide-react';
 import { usePlumbing } from '../context/PlumbingContext';
 
-export const HeroSection: React.FC = () => {
+interface HeroSectionProps {
+  onOpenProvider: () => void;
+}
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenProvider }) => {
   const { 
     openBookingModal, 
-    openEmergencyModal, 
     selectedCity, 
     setSelectedCity,
-    openWhatsApp,
     searchFilter,
-    setSearchFilter,
-    services
+    setSearchFilter
   } = usePlumbing();
 
   const [localSearch, setLocalSearch] = useState(searchFilter);
+  const [selectedTag, setSelectedTag] = useState('Plumbing');
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSearchFilter(localSearch);
-    // Smooth scroll to services
     const el = document.getElementById('services-section');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const POPULAR_KWIKFIX_SERVICES = [
-    { name: 'Water Motor & Suction Pump', price: 'Rs. 1,400', icon: Activity, tag: 'Most Booked' },
-    { name: 'Instant Geyser Repair & Fitting', price: 'Rs. 1,200', icon: Flame, tag: 'Winter Essential' },
-    { name: 'Tap, Mixer & Muslim Shower', price: 'Rs. 450', icon: Wrench, tag: 'Fast 30m' },
-    { name: 'Underground Tank Cleaning', price: 'Rs. 2,999', icon: Sparkles, tag: 'Hygiene Deal' },
-    { name: 'Commode & Flush Tank Repair', price: 'Rs. 850', icon: CheckCircle2, tag: 'Sanitary' },
-    { name: 'Hidden Pipe Seepage Acoustic Check', price: 'Rs. 2,500', icon: Search, tag: 'No Tile Break' }
-  ];
+  const handleTagClick = (tag: string) => {
+    setSelectedTag(tag);
+    setSearchFilter(tag);
+    const el = document.getElementById('services-section');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-b from-sky-50/60 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b border-slate-200 dark:border-slate-800 pt-8 pb-12 sm:pt-12 sm:pb-16 transition-colors">
-      {/* Subtle background motif */}
-      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none bg-[radial-gradient(#0284c7_1px,transparent_1px)] [background-size:20px_20px]"></div>
+    <div>
+      {/* Main Hero Banner: Deep Royal Navy Blue (#07173f to #0d286d) with subtle geometric grid */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#061848] via-[#09225f] to-[#0d2a76] text-white pt-10 sm:pt-16 pb-16 lg:pb-24">
+        {/* Subtle grid pattern overlay */}
+        <div 
+          className="absolute inset-0 opacity-15 pointer-events-none" 
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
+          }}
+        />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Main Hero Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-8 sm:mb-10">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs sm:text-sm font-semibold shadow-xs">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Verified Plumbers On-Demand in {selectedCity}</span>
-          </div>
+        {/* Ambient radial glow */}
+        <div className="absolute top-1/4 left-1/3 -translate-x-1/2 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.15]">
-            Pakistan's Trusted Plumbers at Your Doorstep in{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-cyan-600 to-emerald-600">
-              45 Minutes
-            </span>
-          </h1>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            
+            {/* Left Column: Hero Text & Controls */}
+            <div className="lg:col-span-7 space-y-6 sm:space-y-7 text-left">
+              
+              {/* Pill badge matching screenshot */}
+              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-xs text-xs font-semibold text-white">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Karachi's #1 Home Services Platform</span>
+              </div>
 
-          <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            NADRA CNIC-verified Ustads, transparent upfront pricing in PKR, and an official 7-day rework guarantee. No haggling, zero hidden fees.
-          </p>
-        </div>
+              {/* Headline matching screenshot */}
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.15]">
+                Find Trusted{' '}
+                <span className="text-[#f59e0b]">Professionals</span><br />
+                For Any Job.
+              </h1>
 
-        {/* Quick Search & Instant Booking Bar (KwikFix signature UI) */}
-        <div className="max-w-3xl mx-auto mb-10">
-          <form 
-            onSubmit={handleSearchSubmit}
-            className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-2 sm:p-2.5 flex flex-col sm:flex-row gap-2 items-center"
-          >
-            {/* City Selector within Search */}
-            <div className="flex items-center px-3 py-2 bg-slate-50 dark:bg-slate-800 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 w-full sm:w-auto shrink-0">
-              <MapPin className="w-4 h-4 text-rose-500 mr-1.5 shrink-0" />
-              <select 
-                value={selectedCity} 
-                onChange={(e) => setSelectedCity(e.target.value)}
-                className="bg-transparent border-none focus:outline-none cursor-pointer font-bold pr-1 text-slate-900 dark:text-white"
+              {/* Subtitle */}
+              <p className="text-base sm:text-lg text-blue-100/90 max-w-xl leading-relaxed font-normal">
+                Verified experts in plumbing, electrical, AC, carpentry, cleaning &amp; more — booked in under 5 minutes.
+              </p>
+
+              {/* Search Bar Container matching screenshot */}
+              <form 
+                onSubmit={handleSearchSubmit}
+                className="bg-white rounded-xl sm:rounded-2xl p-2 shadow-2xl flex flex-col sm:flex-row items-center gap-2 max-w-xl text-slate-900"
               >
-                <option value="Karachi" className="dark:bg-slate-900">Karachi</option>
-                <option value="Lahore" className="dark:bg-slate-900">Lahore</option>
-                <option value="Islamabad" className="dark:bg-slate-900">Islamabad</option>
-              </select>
-            </div>
-
-            {/* Keyword Search Input */}
-            <div className="relative flex-1 w-full">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={localSearch}
-                onChange={(e) => {
-                  setLocalSearch(e.target.value);
-                  setSearchFilter(e.target.value);
-                }}
-                placeholder="What plumbing issue do you have? (e.g. Water motor, geyser, leak)"
-                className="w-full pl-9 pr-3 py-2.5 text-xs sm:text-sm bg-transparent border-none text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-0"
-              />
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex w-full sm:w-auto gap-2">
-              <button
-                type="submit"
-                className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs sm:text-sm shadow-md shadow-sky-600/20 transition-all flex items-center justify-center gap-1.5"
-              >
-                <Search className="w-4 h-4" />
-                <span>Search</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => openBookingModal()}
-                className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/20 transition-all flex items-center justify-center gap-1.5"
-              >
-                <Calendar className="w-4 h-4" />
-                <span>Book Now</span>
-              </button>
-            </div>
-          </form>
-
-          {/* Quick Category Chips */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-3 text-xs">
-            <span className="text-slate-400 dark:text-slate-500 font-medium">Quick Pick:</span>
-            {POPULAR_KWIKFIX_SERVICES.map((s, idx) => {
-              const Icon = s.icon;
-              return (
-                <button
-                  key={idx}
-                  onClick={() => openBookingModal(s.name)}
-                  className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:border-sky-500 hover:text-sky-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1.5 shadow-2xs group"
-                >
-                  <Icon className="w-3.5 h-3.5 text-sky-500 group-hover:scale-110 transition-transform" />
-                  <span className="font-semibold">{s.name.split('&')[0].trim()}</span>
-                  <span className="text-[10px] bg-slate-100 dark:bg-slate-700 px-1 rounded text-slate-500 dark:text-slate-400 font-mono">
-                    {s.price}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* 2-Column Showcase: Interactive Booking Card vs Trust Guarantees */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-          {/* Left Column: Popular Services Quick Cards */}
-          <div className="lg:col-span-7 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-md flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
-                <div>
-                  <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-amber-500" />
-                    Instant Home Plumbing Services
-                  </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Transparent PKR rate card with genuine spare parts warranty
-                  </p>
+                <div className="relative flex-1 w-full">
+                  <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={localSearch}
+                    onChange={(e) => setLocalSearch(e.target.value)}
+                    placeholder="What service do you need?"
+                    className="w-full pl-10 pr-3 py-2.5 text-sm bg-transparent border-none text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                  />
                 </div>
+
+                {/* Vertical separator on sm+ */}
+                <div className="hidden sm:block w-px h-8 bg-slate-200"></div>
+
+                {/* City dropdown matching screenshot */}
+                <div className="flex items-center w-full sm:w-auto px-3 py-2 bg-slate-50 sm:bg-transparent rounded-lg text-xs font-semibold text-slate-700">
+                  <select
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                    className="bg-transparent border-none focus:outline-none cursor-pointer text-slate-800 text-xs font-semibold pr-2"
+                  >
+                    <option value="Karachi">Karachi</option>
+                    <option value="Lahore">Lahore</option>
+                    <option value="Islamabad">Islamabad</option>
+                  </select>
+                </div>
+
+                {/* Search button in gold/amber matching screenshot */}
                 <button
-                  onClick={() => {
-                    const el = document.getElementById('services-section');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1"
+                  type="submit"
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-[#f59e0b] hover:bg-[#d97706] text-slate-950 font-extrabold text-sm transition-all hover:scale-[1.02] shadow-sm"
                 >
-                  View All Rates <ArrowRight className="w-3.5 h-3.5" />
+                  Search
+                </button>
+              </form>
+
+              {/* Dual Action Buttons matching screenshot */}
+              <div className="flex flex-wrap items-center gap-4 pt-1">
+                <button
+                  onClick={() => openBookingModal()}
+                  className="px-7 py-3 rounded-xl bg-[#f59e0b] hover:bg-[#d97706] text-slate-950 font-extrabold text-sm sm:text-base shadow-lg transition-all hover:scale-[1.02]"
+                >
+                  Book Now
+                </button>
+
+                <button
+                  onClick={onOpenProvider}
+                  className="px-6 py-3 rounded-xl border border-white/30 text-white hover:bg-white/10 font-bold text-sm sm:text-base transition-all flex items-center gap-2"
+                >
+                  <span>Become a Provider</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {POPULAR_KWIKFIX_SERVICES.slice(0, 4).map((srv, idx) => {
-                  const Icon = srv.icon;
-                  return (
-                    <div
-                      key={idx}
-                      onClick={() => openBookingModal(srv.name)}
-                      className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 bg-slate-50/70 dark:bg-slate-800/60 cursor-pointer transition-all hover:bg-sky-50/50 dark:hover:bg-slate-800 group relative"
-                    >
-                      <span className="absolute top-2 right-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300">
-                        {srv.tag}
-                      </span>
-                      <div className="flex items-start gap-3">
-                        <div className="p-2 rounded-lg bg-white dark:bg-slate-700 text-sky-600 dark:text-sky-400 shadow-2xs group-hover:scale-110 transition-transform shrink-0">
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug">
-                            {srv.name}
-                          </h4>
-                          <div className="mt-1 flex items-center gap-2">
-                            <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">
-                              From {srv.price}
-                            </span>
-                            <span className="text-[11px] text-sky-600 dark:text-sky-400 font-semibold group-hover:underline flex items-center">
-                              Book &rarr;
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+              {/* Trust badges row matching screenshot */}
+              <div className="flex flex-wrap items-center gap-5 sm:gap-6 pt-2 text-xs sm:text-sm text-blue-100/90 font-medium">
+                <div className="flex items-center space-x-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>CNIC Verified Pros</span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  <ShieldCheck className="w-4 h-4 text-blue-300" />
+                  <span>Service Guarantee</span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  <Clock className="w-4 h-4 text-amber-300" />
+                  <span>Book in 5 Minutes</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Interactive Card & Floating Pills matching screenshot */}
+            <div className="lg:col-span-5 relative flex flex-col items-center">
+              
+              {/* Category Pills floating above the card */}
+              <div className="flex flex-wrap justify-center gap-2 mb-4 w-full max-w-md">
+                {[
+                  { name: 'Plumbing', icon: Wrench, active: true },
+                  { name: 'Electrical', icon: Zap },
+                  { name: 'AC Repair', icon: Wind },
+                  { name: 'Carpentry', icon: Hammer },
+                  { name: 'Painting', icon: Paintbrush },
+                  { name: 'Cleaning', icon: Sparkles }
+                ].map((tag) => (
+                  <button
+                    key={tag.name}
+                    onClick={() => handleTagClick(tag.name)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
+                      selectedTag === tag.name
+                        ? 'bg-white text-blue-900 shadow-md scale-105'
+                        : 'bg-white/15 text-white hover:bg-white/25 border border-white/20'
+                    }`}
+                  >
+                    <tag.icon className="w-3.5 h-3.5" />
+                    <span>{tag.name}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Main Booking Confirmation Card matching screenshot */}
+              <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 text-slate-900 border border-slate-100">
+                
+                {/* Floating Rating Badge on Top Right */}
+                <div className="absolute -top-3.5 -right-3 bg-white text-slate-800 rounded-xl px-3 py-1.5 shadow-lg border border-slate-100 flex items-center gap-1.5 text-xs font-bold">
+                  <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                  <span>4.8 / 5.0</span>
+                  <span className="text-[10px] text-slate-400 font-normal">2,400+ reviews</span>
+                </div>
+
+                {/* Booking Confirmed Tag */}
+                <div className="flex items-center space-x-1.5 text-emerald-600 text-xs font-bold mb-4">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span>BOOKING CONFIRMED</span>
+                </div>
+
+                {/* Profile Header */}
+                <div className="flex items-center space-x-3.5 pb-4 border-b border-slate-100">
+                  <div className="w-12 h-12 rounded-full bg-blue-600 text-white font-black text-sm flex items-center justify-center shadow-md">
+                    AK
+                  </div>
+                  <div>
+                    <h4 className="font-extrabold text-base text-slate-900 leading-tight">
+                      Ahmad Karimi
+                    </h4>
+                    <p className="text-xs text-slate-500 font-medium">Certified Plumber</p>
+                    <div className="flex items-center text-amber-400 text-xs mt-0.5">
+                      {'★'.repeat(5)} <span className="text-slate-700 font-bold ml-1">4.9</span>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Quick action bar */}
-            <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>Pay securely after inspection via <strong>Cash, JazzCash, or Bank Transfer</strong></span>
-              </div>
-              <button
-                onClick={() => openWhatsApp('Hi KwikFix, please share your complete plumbing rate card and plumber availability.')}
-                className="text-emerald-600 dark:text-emerald-400 font-bold hover:underline flex items-center gap-1"
-              >
-                <MessageCircle className="w-3.5 h-3.5" />
-                WhatsApp Rate Card
-              </button>
-            </div>
-          </div>
-
-          {/* Right Column: Why KwikFix vs Street Plumbers (The KwikFix Value Proposition) */}
-          <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-2xl p-5 sm:p-6 shadow-xl border border-slate-800 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-sky-400">
-                  The KwikFix Guarantee
-                </span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-600/90 text-white">
-                  7-Day Rework Free
-                </span>
-              </div>
-
-              <h3 className="text-lg font-bold text-white mb-2">
-                Why Thousands Choose KwikFix Over Street Plumbers
-              </h3>
-              <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                Stop worrying about unknown roadside mechanics damaging your expensive sanitary fittings, overcharging, or disappearing when a leak returns.
-              </p>
-
-              <div className="space-y-3 text-xs">
-                <div className="flex items-start gap-3 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700/60">
-                  <UserCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-white block text-xs">100% NADRA Verified Plumbers</strong>
-                    <span className="text-slate-300 text-[11px]">
-                      Every technician's CNIC, criminal record, and residential address are checked before field onboarding.
-                    </span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700/60">
-                  <BadgeDollarSign className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-white block text-xs">Standardized Rate Card</strong>
-                    <span className="text-slate-300 text-[11px]">
-                      Transparent PKR price approved before work starts. Zero surprise bill inflation.
-                    </span>
+                {/* Details Table */}
+                <div className="py-4 space-y-2.5 text-xs">
+                  <div className="flex justify-between items-center text-slate-600">
+                    <span className="text-slate-400 font-medium">Service</span>
+                    <span className="font-bold text-slate-800">Pipe Leak Repair</span>
+                  </div>
+                  <div className="flex justify-between items-center text-slate-600">
+                    <span className="text-slate-400 font-medium">Date &amp; Time</span>
+                    <span className="font-bold text-slate-800">Today, 3:00 PM</span>
+                  </div>
+                  <div className="flex justify-between items-center text-slate-600">
+                    <span className="text-slate-400 font-medium">Location</span>
+                    <span className="font-bold text-slate-800">Gulshan, {selectedCity}</span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 border-t border-slate-100 text-slate-600">
+                    <span className="text-slate-500 font-medium">Est. Cost</span>
+                    <span className="font-black text-base text-blue-600">PKR 2,500</span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700/60">
-                  <Clock className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-white block text-xs">45-Minute Rapid Doorstep Arrival</strong>
-                    <span className="text-slate-300 text-[11px]">
-                      Local technicians stationed across DHA, Clifton, Gulberg, Model Town, F-7, and Blue Area.
-                    </span>
-                  </div>
+                {/* Floating badge on bottom left of card */}
+                <div className="absolute -bottom-3.5 -left-3 bg-white text-slate-800 rounded-xl px-3 py-1.5 shadow-lg border border-slate-100 flex items-center gap-1.5 text-xs font-bold">
+                  <ShieldCheck className="w-4 h-4 text-blue-600" />
+                  <span>800+ Providers</span>
+                  <span className="text-[10px] text-slate-400 font-normal">CNIC Verified</span>
+                </div>
+
+                {/* Card footer */}
+                <div className="pt-2 text-center text-[11px] text-slate-400 font-medium">
+                  Pay only after job completion
                 </div>
               </div>
-            </div>
-
-            {/* Direct helpline buttons */}
-            <div className="mt-5 pt-4 border-t border-slate-800/80 flex gap-2">
-              <a
-                href="tel:03005945349"
-                className="flex-1 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs sm:text-sm text-center flex items-center justify-center gap-1.5 transition-colors shadow"
-              >
-                <PhoneCall className="w-4 h-4" />
-                <span>Call 0300-5945349</span>
-              </a>
-
-              <button
-                onClick={() => openEmergencyModal()}
-                className="px-3.5 py-2.5 rounded-xl bg-rose-600/90 hover:bg-rose-500 text-white font-bold text-xs flex items-center justify-center gap-1 transition-colors"
-                title="Emergency 45-min dispatch"
-              >
-                <AlertTriangle className="w-4 h-4" />
-                <span className="hidden sm:inline">Emergency</span>
-              </button>
             </div>
           </div>
         </div>
 
-        {/* 3-Step "How KwikFix Works" Bar (Decent, friendly, intuitive) */}
-        <div className="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800">
-          <div className="text-center mb-6">
-            <h3 className="text-base sm:text-xl font-bold text-slate-900 dark:text-white">
-              How KwikFix Works in 3 Simple Steps
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Booking your plumbing repair takes less than 60 seconds
-            </p>
-          </div>
+        {/* Bottom smooth wave transition to white background */}
+        <div className="w-full absolute bottom-0 left-0 right-0 overflow-hidden leading-none pointer-events-none">
+          <svg 
+            className="relative block w-full h-8 sm:h-12 text-white fill-current" 
+            viewBox="0 0 1200 120" 
+            preserveAspectRatio="none"
+          >
+            <path d="M0,0 C150,90 350,-40 500,60 C650,160 900,10 1200,40 L1200,120 L0,120 Z"></path>
+          </svg>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xs text-center">
-              <div className="w-8 h-8 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-400 font-bold flex items-center justify-center mx-auto mb-2 text-sm">
-                1
+      {/* Stats Counter Section (White Background) matching screenshot */}
+      <section className="bg-white dark:bg-slate-900 py-10 sm:py-12 border-b border-slate-100 dark:border-slate-800 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
+            
+            {/* Stat 1: 10,000+ Customers Served (Blue icon) */}
+            <div className="flex flex-col items-center space-y-2">
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center shadow-xs">
+                <Users className="w-6 h-6" />
               </div>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-white">Choose Service &amp; Time</h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Select your plumbing problem, enter your address in {selectedCity}, and choose your preferred slot.
-              </p>
+              <div className="text-2xl sm:text-3xl font-black text-blue-600 tracking-tight">
+                10,000+
+              </div>
+              <div className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400">
+                Customers Served
+              </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xs text-center">
-              <div className="w-8 h-8 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-400 font-bold flex items-center justify-center mx-auto mb-2 text-sm">
-                2
+            {/* Stat 2: 800+ Verified Providers (Green icon) */}
+            <div className="flex flex-col items-center space-y-2">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center shadow-xs">
+                <ShieldCheck className="w-6 h-6" />
               </div>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-white">Verified Ustad Arrives</h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Our background-checked technician arrives equipped with specialized tools and provides an upfront diagnosis.
-              </p>
+              <div className="text-2xl sm:text-3xl font-black text-emerald-600 tracking-tight">
+                800+
+              </div>
+              <div className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400">
+                Verified Providers
+              </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xs text-center">
-              <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 font-bold flex items-center justify-center mx-auto mb-2 text-sm">
-                3
+            {/* Stat 3: 4.8 Average Rating (Yellow icon) */}
+            <div className="flex flex-col items-center space-y-2">
+              <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-500 flex items-center justify-center shadow-xs">
+                <Star className="w-6 h-6 fill-amber-500" />
               </div>
-              <h4 className="text-sm font-bold text-slate-900 dark:text-white">Inspect &amp; Pay Safely</h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Verify the repair with the technician, pay via Cash or JazzCash, and enjoy our 7-day warranty.
-              </p>
+              <div className="text-2xl sm:text-3xl font-black text-amber-500 tracking-tight">
+                4.8
+              </div>
+              <div className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400">
+                Average Rating
+              </div>
             </div>
+
+            {/* Stat 4: 50+ Service Categories (Purple icon) */}
+            <div className="flex flex-col items-center space-y-2">
+              <div className="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 flex items-center justify-center shadow-xs">
+                <Briefcase className="w-6 h-6" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-black text-purple-600 tracking-tight">
+                50+
+              </div>
+              <div className="text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400">
+                Service Categories
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

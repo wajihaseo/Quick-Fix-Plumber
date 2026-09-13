@@ -1,6 +1,6 @@
 {
-  "name": "AquaPro Plumbing & Emergency Services",
-  "description": "On-demand verified plumbing and home services platform inspired by KwikFix with transparent upfront pricing, 60-second booking, 24/7 emergency dispatch, WhatsApp integration, maintenance guides, and administrative analytics.",
+  "name": "KwikFix.pk - Home Services Marketplace",
+  "description": "Karachi's #1 home services platform. Verified experts in plumbing, electrical, AC, carpentry, cleaning & more — booked in under 5 minutes.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

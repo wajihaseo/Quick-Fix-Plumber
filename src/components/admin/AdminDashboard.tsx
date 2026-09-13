@@ -30,7 +30,11 @@ import {
 import { usePlumbing } from '../../context/PlumbingContext';
 import { Booking, BookingStatus, UserRole, UserProfile } from '../../types';
 
-export const AdminDashboard: React.FC = () => {
+interface AdminDashboardProps {
+  onExitToPublic?: () => void;
+}
+
+export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExitToPublic }) => {
   const {
     currentUser,
     currentRole,
@@ -191,6 +195,41 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="py-8 bg-slate-100 dark:bg-slate-950 min-h-screen transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        
+        {/* Private Admin Notice & Return Bar */}
+        <div className="rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white p-4 shadow-md flex flex-wrap items-center justify-between gap-3 border border-slate-800">
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => {
+                if (onExitToPublic) onExitToPublic();
+                else window.location.hash = '#/';
+              }}
+              className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-bold text-white transition-all flex items-center gap-1.5"
+            >
+              <span>← Back to Public Website (KWIKFIX.PK)</span>
+            </button>
+            <span className="hidden sm:inline text-slate-400 text-xs">|</span>
+            <div className="flex items-center space-x-1.5 text-xs text-blue-300 font-mono">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Private Admin URL: <strong>/#/admin</strong></span>
+            </div>
+          </div>
+
+          <div className="text-xs text-slate-300 flex items-center space-x-2">
+            <span className="text-slate-400">Owner Access Mode</span>
+            <button
+              onClick={() => {
+                switchRole('customer');
+                if (onExitToPublic) onExitToPublic();
+                else window.location.hash = '#/';
+              }}
+              className="px-3 py-1 rounded-lg bg-rose-600/80 hover:bg-rose-600 text-white text-xs font-semibold"
+            >
+              Sign Out of Admin
+            </button>
+          </div>
+        </div>
+
         {/* Top Control Bar with Role Check */}
         <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center space-x-3.5">
