@@ -13,411 +13,405 @@ import {
 export const INITIAL_SERVICES: ServiceItem[] = [
   {
     id: 'srv-1',
-    title: 'Emergency Pipe Leak & Burst Repair',
-    category: 'both',
-    basePrice: 180,
+    title: 'Tap, Mixer & Muslim Shower Repair / Fitting',
+    category: 'residential',
+    basePrice: 450,
     pricingType: 'from',
-    estimatedDuration: '1 - 2 hours',
-    description: 'Rapid emergency shutoff, leak detection, and durable copper/PEX pipe repair to prevent structural water damage.',
-    features: ['Instant 24/7 priority response', 'Digital acoustic leak detection', 'Full pipe pressure test', '1-year repair warranty'],
+    estimatedDuration: '30 - 45 mins',
+    description: 'Instant repair for leaking taps, broken Muslim shower pipes, kitchen sink mixers, spindle replacement and new installations.',
+    features: ['Upfront fixed pricing per point', 'Brass spindle & washer replacement', 'Teflon tape sealing guarantee', 'Zero mess, neat clean job'],
     popular: true,
     emergencyAvailable: true,
-    iconName: 'AlertTriangle'
+    iconName: 'Wrench',
+    serviceGroup: 'Taps & Showers'
   },
   {
     id: 'srv-2',
-    title: 'Hydro-Jetting & Severe Drain Cleaning',
+    title: 'Instant Gas & Electric Geyser Repair / Fitting',
     category: 'both',
-    basePrice: 195,
+    basePrice: 1200,
     pricingType: 'from',
-    estimatedDuration: '1 - 3 hours',
-    description: 'High-pressure 4,000 PSI hydro-jetting to remove tough tree roots, heavy grease, and stubborn blockages.',
-    features: ['High-definition sewer camera video', 'Complete grease & root scouring', 'Safe for all pipe materials', '90-day no-clog guarantee'],
+    estimatedDuration: '1 - 2 hours',
+    description: 'Specialist diagnosis for low gas heating, electric geyser element replacement, thermostat failure, pressure relief valve, and new winter geyser installation.',
+    features: ['Original thermostat & element fitting', 'Gas burner descaling & nozzle tuning', 'High-pressure safety valve check', '7-day rework warranty'],
     popular: true,
     emergencyAvailable: true,
-    iconName: 'Droplets'
+    iconName: 'Flame',
+    serviceGroup: 'Geysers'
   },
   {
     id: 'srv-3',
-    title: 'Water Heater Installation & Repair',
-    category: 'residential',
-    basePrice: 280,
+    title: 'Water Motor, Suction & Booster Pump Repair',
+    category: 'both',
+    basePrice: 1400,
     pricingType: 'from',
-    estimatedDuration: '2 - 4 hours',
-    description: 'Expert servicing and installation for tankless and traditional gas/electric water heaters for peak energy efficiency.',
-    features: ['Tankless & standard tank repair', 'Thermostat & element replacement', 'Thermal expansion tank checks', 'Old unit haul-away included'],
+    estimatedDuration: '1 - 2.5 hours',
+    description: 'Expert repair for donkey pumps, golden suction motors, booster pressure pumps, burnt capacitor replacement, bearing overhaul and electrical wiring.',
+    features: ['Capacitor & seal replacement', 'Suction line priming & vacuum test', 'Overheating & low-voltage check', 'Emergency same-day arrival'],
     popular: true,
     emergencyAvailable: true,
-    iconName: 'Flame'
+    iconName: 'Activity',
+    serviceGroup: 'Water Motors'
   },
   {
     id: 'srv-4',
-    title: 'Sewer Line Camera Inspection & Trenchless Relining',
-    category: 'both',
-    basePrice: 250,
-    pricingType: 'fixed',
-    estimatedDuration: '1.5 hours',
-    description: 'Pinpoint underground pipeline fractures and root intrusions without digging up your pristine lawn or driveway.',
-    features: ['4K color fiber-optic inspection', 'USB recording of entire line', 'Accurate depth & location tracking', 'Written municipal report'],
-    popular: false,
-    emergencyAvailable: false,
-    iconName: 'Search'
+    title: 'Commode, English Seat & Flush Tank Repair',
+    category: 'residential',
+    basePrice: 850,
+    pricingType: 'from',
+    estimatedDuration: '45 - 60 mins',
+    description: 'Fix continuous water running into bowl, faulty flush handle, siphon valve, wax ring seal leakage, or brand-new English toilet installation.',
+    features: ['Silent dual-flush valve fitting', 'Odor-blocking wax seal installation', 'Floor bolt anchoring without tile crack', 'Tested for leak-free flushing'],
+    popular: true,
+    emergencyAvailable: true,
+    iconName: 'CheckCircle2',
+    serviceGroup: 'Bathroom Sanitary'
   },
   {
     id: 'srv-5',
-    title: 'Commercial Backflow Prevention & Certification',
-    category: 'commercial',
-    basePrice: 320,
+    title: 'Drain Blockage & Kitchen Pipe Machine Unclogging',
+    category: 'both',
+    basePrice: 999,
     pricingType: 'from',
-    estimatedDuration: '2 hours',
-    description: 'Annual mandatory municipal backflow testing, certified paperwork filing, repair, and double-check valve installations.',
-    features: ['Certified backflow testers', 'Official city compliance filing', 'Emergency valve rebuilding', 'Annual inspection scheduling'],
-    popular: false,
+    estimatedDuration: '45 - 90 mins',
+    description: 'Clear chocked kitchen sink drains, bathroom floor traps, and main sewerage line blocks using heavy-duty electric spring snake machines.',
+    features: ['Mechanized rotating cable snake', 'Safe for PVC, GI & cast-iron pipes', 'No destructive wall or tile breaking', '90-day free flow warranty'],
+    popular: true,
     emergencyAvailable: true,
-    iconName: 'ShieldCheck'
+    iconName: 'Droplets',
+    serviceGroup: 'Drainage'
   },
   {
     id: 'srv-6',
-    title: 'Commercial Grease Trap & Industrial Pumping',
-    category: 'commercial',
-    basePrice: 450,
+    title: 'Underground & Overhead Water Tank Mechanized Cleaning',
+    category: 'both',
+    basePrice: 2999,
     pricingType: 'from',
-    estimatedDuration: '3 hours',
-    description: 'Heavy-duty grease trap maintenance, interceptor pumping, and compliance hydro-scrubbing for restaurants and hospitality.',
-    features: ['Full manifest disposal certification', 'Off-peak overnight servicing', 'Odor neutralization treatment', 'BOD compliance maintenance'],
+    estimatedDuration: '2 - 3 hours',
+    description: 'Deep high-pressure rotary scrubbing, sludge pumping, and anti-bacterial chlorine treatment to guarantee crystal-clear potable water for your family.',
+    features: ['Submersible sludge evacuation', '150 Bar high-pressure surface wash', 'Food-grade potassium permanganate treatment', 'Free water quality inspection'],
     popular: false,
-    emergencyAvailable: true,
-    iconName: 'Building2'
+    emergencyAvailable: false,
+    iconName: 'Sparkles',
+    serviceGroup: 'Tank Cleaning'
   },
   {
     id: 'srv-7',
-    title: 'Bathroom & Kitchen Fixture Upgrades',
-    category: 'residential',
-    basePrice: 140,
-    pricingType: 'hourly',
+    title: 'Hidden Pipe Leakage & Wall Seepage Acoustic Detection',
+    category: 'both',
+    basePrice: 2500,
+    pricingType: 'fixed',
     estimatedDuration: '1 - 2 hours',
-    description: 'Modern low-flow toilets, luxury faucets, garbage disposals, and shower valve installations with precision alignment.',
-    features: ['Certified Moen & Kohler installers', 'Water conservation optimization', 'Leak-proof pressure testing', 'Clean, mess-free service'],
-    popular: false,
-    emergencyAvailable: false,
-    iconName: 'Wrench'
+    description: 'State-of-the-art non-invasive acoustic microphone & thermal detection to locate concealed pipe bursts and seepage inside walls without breaking tiles.',
+    features: ['Non-destructive pinpoint location', 'Acoustic digital listening stick', 'Concrete moisture percentage mapping', 'Detailed written repair estimate'],
+    popular: true,
+    emergencyAvailable: true,
+    iconName: 'Search',
+    serviceGroup: 'Leak Detection'
   },
   {
     id: 'srv-8',
-    title: 'Whole-Home Water Filtration & Softeners',
-    category: 'residential',
-    basePrice: 550,
+    title: 'Commercial Restaurant Grease Trap & Backflow Certification',
+    category: 'commercial',
+    basePrice: 4500,
     pricingType: 'from',
-    estimatedDuration: '3 - 5 hours',
-    description: 'Multi-stage filtration and salt-free water softeners to protect copper pipes and deliver crystal-clean drinking water.',
-    features: ['Removes 99% chlorine & heavy metals', 'Prevents scale buildup in appliances', 'Reverse osmosis under-sink units', 'Free home water hardness test'],
+    estimatedDuration: '3 hours',
+    description: 'Heavy-duty plumbing maintenance, grease interceptor cleaning, high-flow commercial pipeline descaling, and food authority hygiene compliance.',
+    features: ['Off-peak nighttime service', 'Full environmental waste disposal', 'Heavy-duty stainless steel interceptors', 'Preventative monthly maintenance contracts'],
     popular: false,
-    emergencyAvailable: false,
-    iconName: 'Sparkles'
+    emergencyAvailable: true,
+    iconName: 'Building2',
+    serviceGroup: 'Commercial'
   }
 ];
 
 export const INITIAL_TECHNICIANS: Technician[] = [
   {
     id: 'tech-1',
-    name: 'Marcus Vance',
-    email: 'marcus.v@aquaproplumbing.com',
-    phone: '(555) 234-8901',
-    specialty: 'Master Plumber & Gas Systems Specialist',
+    name: 'Ustad Mohammad Tariq',
+    email: 'm.tariq@kwikfix.pk',
+    phone: '0300-4829101',
+    specialty: 'Master Plumber & Water Motor Specialist',
     rating: 4.96,
-    completedJobs: 412,
+    completedJobs: 1420,
     status: 'available',
-    vehicleNumber: 'VAN-104',
-    currentLocation: 'North Metro District'
+    vehicleNumber: 'KHI-8821 (Bike/Toolkit)',
+    currentLocation: 'DHA Phase 5 & Clifton, Karachi',
+    city: 'Karachi',
+    cnicVerified: true,
+    experienceYears: 12
   },
   {
     id: 'tech-2',
-    name: 'Elena Rostova',
-    email: 'elena.r@aquaproplumbing.com',
-    phone: '(555) 345-6712',
-    specialty: 'Commercial Backflow & Hydro-Jetting Lead',
-    rating: 4.92,
-    completedJobs: 338,
+    name: 'Ustad Rashid Ali',
+    email: 'rashid.ali@kwikfix.pk',
+    phone: '0321-9921443',
+    specialty: 'Instant Geyser, Electric Heating & Sanitary Expert',
+    rating: 4.94,
+    completedJobs: 980,
     status: 'on_job',
-    vehicleNumber: 'VAN-208',
-    currentLocation: 'Downtown Commercial Hub'
+    vehicleNumber: 'LHR-7729 (Tool Van)',
+    currentLocation: 'Gulberg & Model Town, Lahore',
+    city: 'Lahore',
+    cnicVerified: true,
+    experienceYears: 9
   },
   {
     id: 'tech-3',
-    name: 'Darius Cole',
-    email: 'darius.c@aquaproplumbing.com',
-    phone: '(555) 456-7890',
-    specialty: 'Emergency Water Leaks & Tankless Systems',
+    name: 'Ustad Naveed Ahmed',
+    email: 'naveed.ahmed@kwikfix.pk',
+    phone: '0345-5512908',
+    specialty: 'Emergency Pipe Bursts & Electric Drain Snake Lead',
     rating: 4.98,
-    completedJobs: 520,
+    completedJobs: 1650,
     status: 'available',
-    vehicleNumber: 'VAN-112',
-    currentLocation: 'Westside Suburbs'
+    vehicleNumber: 'ISB-4410 (Emergency Quick Unit)',
+    currentLocation: 'F-7 / F-10 & Blue Area, Islamabad',
+    city: 'Islamabad',
+    cnicVerified: true,
+    experienceYears: 14
   },
   {
     id: 'tech-4',
-    name: 'Leo Chen',
-    email: 'leo.c@aquaproplumbing.com',
-    phone: '(555) 567-8910',
-    specialty: 'Sewer Video Diagnostics & Trenchless Pipe Lining',
-    rating: 4.88,
-    completedJobs: 284,
-    status: 'off_duty',
-    vehicleNumber: 'VAN-301',
-    currentLocation: 'East Industrial Park'
+    name: 'Ustad Bilal Hussain',
+    email: 'bilal.h@kwikfix.pk',
+    phone: '0333-7766512',
+    specialty: 'Underground Tank Mechanized Wash & Hidden Seepage',
+    rating: 4.89,
+    completedJobs: 730,
+    status: 'available',
+    vehicleNumber: 'KHI-2199 (Mobile Sludge Pump Unit)',
+    currentLocation: 'Gulshan-e-Iqbal & Johar, Karachi',
+    city: 'Karachi',
+    cnicVerified: true,
+    experienceYears: 8
   }
 ];
 
 export const INITIAL_BOOKINGS: Booking[] = [
   {
-    id: 'PL-9421',
-    customerName: 'Robert Henderson',
-    email: 'robert.h@gmail.com',
-    phone: '(555) 612-9011',
-    address: '742 Evergreen Terrace',
-    city: 'Springfield Metro',
+    id: 'KF-8821',
+    customerName: 'Khurram Shahzad',
+    email: 'khurram.s@gmail.com',
+    phone: '0300-8271920',
+    address: 'House 42-B, Street 14, Phase 6',
+    city: 'Karachi',
     clientType: 'residential',
-    serviceCategory: 'Emergency Pipe Leak & Burst Repair',
+    serviceCategory: 'Water Motor, Suction & Booster Pump Repair',
     priority: 'emergency',
-    preferredDate: '2026-09-13',
-    timeSlot: 'Immediate Dispatch (<30m)',
-    description: 'Basement main shutoff valve cracked and spraying water at high pressure. Main line isolated partially.',
-    estimatedPrice: 320,
+    preferredDate: 'Today',
+    timeSlot: 'Within 45 Mins (Urgent)',
+    description: 'Suction water motor making loud humming noise and smell of burning wire. Water not reaching roof tank.',
+    estimatedPrice: 1400,
+    finalPrice: 1650,
     status: 'in_progress',
-    assignedTechnicianId: 'tech-3',
-    assignedTechnicianName: 'Darius Cole',
-    createdAt: '2026-09-13T03:30:00Z',
-    updatedAt: '2026-09-13T03:45:00Z',
-    isEmergency: true,
-    technicianNotes: 'Arrived on scene, shut water supply at curb meter. Replacing failed brass gate valve with quarter-turn ball valve.',
-    partsUsed: ['1-inch Brass Ball Valve', 'PEX crimp rings', 'Water containment pads']
+    assignedTechnicianId: 'tech-1',
+    assignedTechnicianName: 'Ustad Mohammad Tariq',
+    createdAt: '2026-09-13T03:15:00Z',
+    updatedAt: '2026-09-13T03:40:00Z',
+    technicianNotes: 'Arrived on site in 28 mins. 16uF motor capacitor replaced with original Fuji capacitor. Motor suction running smooth.',
+    partsUsed: ['16uF Fuji Heavy Motor Capacitor', 'Teflon Brass Union Nipple'],
+    isEmergency: true
   },
   {
-    id: 'PL-9420',
-    customerName: 'Bistro Bella Vista (Mgr. Tony)',
-    email: 'operations@bellavistabistro.com',
-    phone: '(555) 883-2004',
-    address: '120 Ocean View Boulevard',
-    city: 'Harbor District',
-    clientType: 'commercial',
-    serviceCategory: 'Commercial Grease Trap & Industrial Pumping',
-    priority: 'urgent',
-    preferredDate: '2026-09-13',
-    timeSlot: 'Morning (08:00 AM - 11:00 AM)',
-    description: 'Quarterly grease interceptor pumping required before health audit scheduled tomorrow morning.',
-    estimatedPrice: 650,
-    status: 'dispatched',
-    assignedTechnicianId: 'tech-2',
-    assignedTechnicianName: 'Elena Rostova',
-    createdAt: '2026-09-12T18:15:00Z',
-    updatedAt: '2026-09-13T02:10:00Z',
-    isEmergency: false,
-    technicianNotes: 'Dispatched with hydro-jet pumping unit. ETA 15 minutes.'
-  },
-  {
-    id: 'PL-9419',
-    customerName: 'Amanda Phillips',
-    email: 'amanda.p@outlook.com',
-    phone: '(555) 902-3341',
-    address: '418 Pine Ridge Circle',
-    city: 'Oakwood Hills',
+    id: 'KF-8822',
+    customerName: 'Fatima Zafar',
+    email: 'fatima.zafar@outlook.com',
+    phone: '0321-4455678',
+    address: 'Apartment 304, Block 5, Clifton',
+    city: 'Karachi',
     clientType: 'residential',
-    serviceCategory: 'Water Heater Installation & Repair',
+    serviceCategory: 'Tap, Mixer & Muslim Shower Repair / Fitting',
     priority: 'standard',
-    preferredDate: '2026-09-14',
-    timeSlot: 'Afternoon (12:00 PM - 03:00 PM)',
-    description: '50-gallon Rheem tank producing lukewarm water. Suspected lower heating element failure.',
-    estimatedPrice: 280,
+    preferredDate: 'Tomorrow',
+    timeSlot: 'Morning (10:00 AM - 1:00 PM)',
+    description: 'Master bathroom mixer leaking from joint and kitchen Muslim shower pipe cracked.',
+    estimatedPrice: 650,
     status: 'confirmed',
     assignedTechnicianId: 'tech-1',
-    assignedTechnicianName: 'Marcus Vance',
-    createdAt: '2026-09-12T14:20:00Z',
-    updatedAt: '2026-09-12T15:00:00Z',
+    assignedTechnicianName: 'Ustad Mohammad Tariq',
+    createdAt: '2026-09-13T01:30:00Z',
+    updatedAt: '2026-09-13T01:35:00Z',
     isEmergency: false
   },
   {
-    id: 'PL-9418',
-    customerName: 'Crestview Medical Offices',
-    email: 'facilities@crestviewhealth.org',
-    phone: '(555) 741-5500',
-    address: '890 Corporate Parkway, Suite 300',
-    city: 'Downtown Commercial Hub',
+    id: 'KF-8823',
+    customerName: 'Cafe Aylanto Management (Omer)',
+    email: 'omer.manager@aylanto.com',
+    phone: '0301-8492011',
+    address: 'M.M. Alam Road, Gulberg III',
+    city: 'Lahore',
     clientType: 'commercial',
-    serviceCategory: 'Commercial Backflow Prevention & Certification',
-    priority: 'standard',
-    preferredDate: '2026-09-15',
-    timeSlot: 'Morning (08:00 AM - 11:00 AM)',
-    description: 'Annual mandatory test for three double-check detector assemblies on fire sprinkler and potable water mains.',
-    estimatedPrice: 480,
-    status: 'pending',
-    createdAt: '2026-09-12T11:45:00Z',
-    updatedAt: '2026-09-12T11:45:00Z',
+    serviceCategory: 'Commercial Restaurant Grease Trap & Backflow Certification',
+    priority: 'urgent',
+    preferredDate: 'Tonight',
+    timeSlot: 'Evening (7:00 PM - 10:00 PM)',
+    description: 'Kitchen sink drainage slow during dinner rush, grease trap cleanout and high-flow sewer line machine flush required.',
+    estimatedPrice: 4500,
+    status: 'dispatched',
+    assignedTechnicianId: 'tech-2',
+    assignedTechnicianName: 'Ustad Rashid Ali',
+    createdAt: '2026-09-13T02:45:00Z',
+    updatedAt: '2026-09-13T03:10:00Z',
     isEmergency: false
   },
   {
-    id: 'PL-9417',
-    customerName: 'Jonathan Davis',
-    email: 'jdavis.contracting@gmail.com',
-    phone: '(555) 334-1188',
-    address: '55 Willow Creek Lane',
-    city: 'Riverside',
+    id: 'KF-8824',
+    customerName: 'Dr. Asim Farooq',
+    email: 'dr.asim@yahoo.com',
+    phone: '0345-5192834',
+    address: 'House 12, Street 28, Sector F-8/2',
+    city: 'Islamabad',
     clientType: 'residential',
-    serviceCategory: 'Hydro-Jetting & Severe Drain Cleaning',
-    priority: 'urgent',
-    preferredDate: '2026-09-11',
-    timeSlot: 'Afternoon (12:00 PM - 03:00 PM)',
-    description: 'Tree root blockage in 4-inch main sewer line backing up into downstairs laundry sink.',
-    estimatedPrice: 380,
-    finalPrice: 380,
+    serviceCategory: 'Instant Gas & Electric Geyser Repair / Fitting',
+    priority: 'standard',
+    preferredDate: 'Today',
+    timeSlot: 'Afternoon (2:00 PM - 5:00 PM)',
+    description: 'Instant gas geyser igniting then turning off after 30 seconds. Water remains cold.',
+    estimatedPrice: 1200,
+    finalPrice: 1200,
     status: 'completed',
-    assignedTechnicianId: 'tech-1',
-    assignedTechnicianName: 'Marcus Vance',
-    createdAt: '2026-09-11T09:00:00Z',
-    updatedAt: '2026-09-11T16:30:00Z',
-    isEmergency: false,
-    technicianNotes: 'Used 1/2 inch hydro-jet head to blast root mass at 42-foot mark. Inspected with color camera. Flow fully restored.',
-    partsUsed: ['Biodegradable root barrier additive', '4-inch Cleanout plug']
+    assignedTechnicianId: 'tech-3',
+    assignedTechnicianName: 'Ustad Naveed Ahmed',
+    createdAt: '2026-09-12T14:10:00Z',
+    updatedAt: '2026-09-12T16:00:00Z',
+    technicianNotes: 'Descaled gas burner assembly and replaced faulty thermocouple sensor. Gas flow calibrated. Customer verified hot water.',
+    partsUsed: ['Copper Thermocouple Sensor', 'Gas Pilot Cleaning Needle'],
+    isEmergency: false
   }
 ];
 
 export const INITIAL_TESTIMONIALS: CustomerTestimonial[] = [
   {
     id: 't-1',
-    name: 'Sarah Jenkins',
-    role: 'Homeowner',
+    name: 'Babar Rizvi',
+    role: 'Homeowner, Phase 6 DHA',
     clientType: 'residential',
     rating: 5,
-    comment: 'Our water line ruptured under the foundation at 11 PM on a Sunday. Darius arrived in 22 minutes, isolated the line with zero mess, and repiped it flawlessly. True lifesavers!',
-    date: '3 days ago',
-    serviceUsed: 'Emergency Pipe Leak & Burst Repair',
+    comment: 'Plumber arrived at 9 PM on a Sunday within 35 minutes when our main water motor died. Fixed the capacitor and primed the suction pipe cleanly. No unnecessary charges or haggling!',
+    date: 'Yesterday',
+    serviceUsed: 'Water Motor & Suction Pump Repair',
     verified: true,
-    location: 'Westside Suburbs'
+    location: 'Karachi'
   },
   {
     id: 't-2',
-    name: 'Michael Vance',
-    role: 'General Manager, Grand Plaza Hotel',
-    clientType: 'commercial',
+    name: 'Mrs. Tahira Qureshi',
+    role: 'Resident, Model Town',
+    clientType: 'residential',
     rating: 5,
-    comment: 'Managing 120 guest rooms means plumbing failure is not an option. AquaPro handles our commercial boiler plant and annual backflow tests. Fast, compliant, and extraordinarily clean.',
-    date: '1 week ago',
-    serviceUsed: 'Commercial Backflow & Boiler Maintenance',
+    comment: 'Booking on KwikFix was so simple! The technician Ustad Rashid was punctual, polite, and wore shoe covers before entering. Fixed our instant geyser and installed 2 mixer taps perfectly.',
+    date: '3 days ago',
+    serviceUsed: 'Instant Geyser Repair & Taps',
     verified: true,
-    location: 'Downtown Commercial Hub'
+    location: 'Lahore'
   },
   {
     id: 't-3',
-    name: 'Patricia Gomez',
-    role: 'Residential Client',
-    clientType: 'residential',
+    name: 'Shahzaib Malik',
+    role: 'Operations Director, TechHub Plaza',
+    clientType: 'commercial',
     rating: 5,
-    comment: 'Transparent flat-rate pricing with no surprise upcharges. They diagnosed why our tankless heater was throwing error codes in 10 minutes. Will never use anyone else.',
-    date: '2 weeks ago',
-    serviceUsed: 'Water Heater Installation & Repair',
+    comment: 'We run a 4-story corporate office in Blue Area. KwikFix handles all our commercial backflow testing and quarterly underground water tank cleaning. Complete invoicing with GST and certified reports.',
+    date: '1 week ago',
+    serviceUsed: 'Commercial Tank Cleaning & Plumbing',
     verified: true,
-    location: 'Oakwood Hills'
+    location: 'Islamabad'
   },
   {
     id: 't-4',
-    name: 'Greg Martinez',
-    role: 'Facility Director, Logistics Park',
-    clientType: 'commercial',
+    name: 'Dr. Ayesha Siddiqui',
+    role: 'Homeowner, Gulshan-e-Iqbal',
+    clientType: 'residential',
     rating: 5,
-    comment: 'Their digital sewer video inspections and monthly reports make facility budget approvals a breeze. Always professional, punctual, and equipped with industrial-grade machinery.',
-    date: '3 weeks ago',
-    serviceUsed: 'Sewer Line Camera Inspection & Relining',
+    comment: 'We had persistent wall seepage that 3 local plumbers could not trace. KwikFix came with digital acoustic leak detectors and pinpointed the cracked concealed elbow behind the tiles within 20 minutes.',
+    date: '2 weeks ago',
+    serviceUsed: 'Concealed Pipe Leak Detection',
     verified: true,
-    location: 'East Industrial Park'
+    location: 'Karachi'
   }
 ];
 
 export const INITIAL_BLOG_POSTS: BlogPost[] = [
   {
     id: 'blog-1',
-    title: '5 Warning Signs Your Underground Main Water Line Is Failing',
-    slug: '5-warning-signs-underground-main-water-line-failing',
-    excerpt: 'Learn how to detect silent underground water line leaks before catastrophic foundation settling and astronomical municipal water bills strike.',
+    title: 'How to Prevent Your Water Suction Motor From Burning Out During Low Voltage',
+    slug: 'water-motor-low-voltage-burn-prevention',
+    excerpt: 'Low voltage during summer load-shedding is the #1 cause of burnt donkey pumps and suction motors in Pakistani homes. Here is how a magnetic voltage protector saves you Rs. 15,000.',
+    content: [
+      'In cities like Karachi and Lahore, erratic line voltage frequently dips below 180V. When a single-phase water pump attempts to start against a cold hydraulic head under low voltage, the start winding draws 4x rated amperes without achieving running RPM.',
+      '1. Install a Heavy-Duty Magnetic Voltage Guard: Place a dedicated 30A digital over/under-voltage cutout box directly at your water motor power switch. Set the minimum threshold to 195V.',
+      '2. Inspect Motor Starting Capacitors Every 6 Months: Electrolytic capacitors dry out in heat. If you hear a loud humming sound without rotation, shut off immediately to prevent winding meltdown.',
+      '3. Never Run Motor Dry: Without water circulation, mechanical shaft seals overheat in 90 seconds, causing water to flood the motor bearing housing.'
+    ],
     category: 'maintenance',
     readTime: '4 min read',
-    author: 'Marcus Vance, Master Plumber',
-    date: 'September 10, 2026',
-    tags: ['Water Leaks', 'Foundation Care', 'Prevention'],
-    featured: true,
-    content: [
-      'An underground main water line leak can stay hidden for weeks while quietly causing subterranean erosion, sinkholes, and structural distress to your home foundation.',
-      '1. Unexplained Spikes on Your Water Utility Statement: If your household water consumption jumps significantly without changes in occupancy or lawn irrigation, a pressurized underground supply pipe may have developed a fracture.',
-      '2. Mysterious Lush or Spongy Patches in Your Lawn: When a subterranean pipe fractures, water saturates the soil above, causing sudden patches of hyper-green grass or damp mud spots during dry weather.',
-      '3. Noticeable Drop in Household Water Pressure: When running two fixtures simultaneously (e.g. shower and kitchen tap), a drop in dynamic pressure often indicates volume is escaping before reaching the fixtures.',
-      '4. Hissing or Rumbling Sound Near Main Shutoff: Even when all internal taps are tightly closed, placing an ear or acoustic detector against the brass main shutoff can reveal high-velocity escaping water sounds.',
-      '5. Sediment or Rust Discoloration: If your water develops a brown or reddish hue after running cold, exterior soil may be infiltrating through a corroded galvanised iron line.',
-      'Recommendation: If you spot any of these warning signs, shut off the street curb key and schedule a certified acoustic leak test immediately.'
-    ]
+    author: 'Ustad Mohammad Tariq (Master Plumber)',
+    date: 'September 2026',
+    tags: ['Water Motor', 'Low Voltage', 'Suction Pump', 'Karachi Plumbing'],
+    featured: true
   },
   {
     id: 'blog-2',
-    title: 'Frozen Pipe Prevention & Emergency Thawing Protocol',
-    slug: 'frozen-pipe-prevention-emergency-thawing-protocol',
-    excerpt: 'Critical cold-weather checklist to protect uninsulated crawlspaces, exterior hose bibs, and prevent expensive winter burst pipes.',
-    category: 'emergency',
-    readTime: '6 min read',
-    author: 'Darius Cole, Emergency Lead',
-    date: 'September 04, 2026',
-    tags: ['Winter Prep', 'Freeze Protection', 'Emergency Tips'],
+    title: 'Instant Gas Geyser vs Electric Storage Geyser: Pakistani Winter Guide',
+    slug: 'instant-gas-geyser-vs-electric-winter-guide',
+    excerpt: 'Facing low gas pressure this winter? Compare the operating cost, water flow rates, and safety guidelines between instant LPG/natural gas geysers and modern hybrid electric units.',
     content: [
-      'Water expands by approximately 9% when freezing. When trapped inside rigid copper or PVC pipes, the immense hydrostatic pressure bursts the pipe wall, leading to thousands in flood damage.',
-      'Proactive Prevention Steps:',
-      '- Disconnect and drain all exterior garden hoses and shut the indoor isolation valves for outdoor bibs.',
-      '- Maintain minimum 55°F (13°C) thermostat settings indoors even when traveling or away for the weekend.',
-      '- Open under-sink cabinet doors in exterior-facing walls so warm house air circulates around supply lines.',
-      '- Let a pencil-thin trickle of cold water run from the furthest faucet on nights dropping below 20°F (-7°C). Moving water rarely freezes.',
-      'What to Do If a Pipe Freezes:',
-      'Keep the faucet open. Gently apply radiant heat using a hair dryer or electric heating tape wrapped around the frozen section. NEVER use an open flame blowtorch, which creates steam explosions and fire hazards.'
-    ]
+      'Winter gas load-shedding forces millions of Pakistani households to evaluate alternative water heating solutions.',
+      'Instant Gas Geysers: Provide on-demand hot water without storing 30-50 gallons. However, they require minimum 0.5 Bar water pressure and adequate natural gas pressure to ignite reliably.',
+      'Electric Storage Geysers: Reliable when gas drops to zero, but consume 2,000 to 2,500 Watts. Installing a digital timer switch that operates only between 5 AM - 7 AM saves up to 40% on electricity bills.',
+      'Safety First: Always ensure instant gas geysers have an external flue exhaust pipe. Never install gas geysers inside unventilated, enclosed bathrooms.'
+    ],
+    category: 'energy_saving',
+    readTime: '6 min read',
+    author: 'Ustad Rashid Ali',
+    date: 'August 2026',
+    tags: ['Geyser Fitting', 'Winter Heating', 'Gas Pressure', 'Electricity Saving']
   },
   {
     id: 'blog-3',
-    title: 'Tankless vs Traditional Tank Water Heaters: True Lifetime ROI',
-    slug: 'tankless-vs-traditional-tank-water-heaters-true-roi',
-    excerpt: 'Detailed cost breakdown comparing 20-year lifespans, energy rebate credits, and annual descaling requirements for homeowners.',
-    category: 'energy_saving',
-    readTime: '5 min read',
-    author: 'Elena Rostova, Commercial Lead',
-    date: 'August 28, 2026',
-    tags: ['Energy Efficiency', 'Water Heaters', 'Cost Savings'],
+    title: 'How to Sanitize Underground & Overhead Water Tanks Before Monsoon',
+    slug: 'underground-overhead-water-tank-cleaning-guide',
+    excerpt: 'Stagnant groundwater and municipal line silt contaminate domestic water tanks with E. coli and dengue larvae. Here is the step-by-step master plumber disinfection protocol.',
     content: [
-      'Choosing between an on-demand tankless water heater and a conventional 50-gallon storage tank requires analyzing upfront capital outlay versus long-term operational efficiency.',
-      'Traditional Storage Tanks: Lower upfront equipment and installation cost ($1,200 - $2,200 installed). However, they continuously consume gas or electricity to maintain 120°F water 24/7, resulting in standby thermal losses. Typical lifespan is 8 to 12 years.',
-      'Tankless Systems: Higher initial installation investment ($2,800 - $4,500 installed) often requiring upgraded 3/4-inch gas supply lines or electrical sub-panels. However, they only heat water on demand, cutting utility heating bills by up to 34%, with an average service life exceeding 20+ years.',
-      'Maintenance Verdict: In areas with mineral-rich hard water, tankless units require an annual vinegar descaling flush to preserve the copper heat exchanger warranty.'
-    ]
+      'Municipal water in urban centers contains sediment and microscopic pathogens that settle at the bottom of underground water tanks.',
+      'Step 1: Sludge Drainage: Evacuate the bottom 6 inches of mud using a submersible solids pump.',
+      'Step 2: Mechanized High-Pressure Scrubbing: Use a 150-Bar rotary jet washer with non-toxic degreaser to scrub wall algae and calcium crust.',
+      'Step 3: Disinfection with Potassium Permanganate or Bleach: Treat walls with food-grade disinfectant, let sit for 30 minutes, and rinse thoroughly before refilling.',
+      'We recommend scheduling tank cleaning every 6 months for optimum family skin and gastrointestinal health.'
+    ],
+    category: 'maintenance',
+    readTime: '5 min read',
+    author: 'Ustad Bilal Hussain',
+    date: 'July 2026',
+    tags: ['Tank Cleaning', 'Water Hygiene', 'Monsoon Care', 'DHA & Clifton']
   },
   {
     id: 'blog-4',
-    title: 'Commercial Kitchen Plumbing & Health Code Compliance Guide',
-    slug: 'commercial-kitchen-plumbing-health-code-compliance-guide',
-    excerpt: 'Essential plumbing guidelines for restaurant operators: grease traps, air gaps, floor sinks, and preventing sewer backups during peak hours.',
-    category: 'commercial',
-    readTime: '7 min read',
-    author: 'Marcus Vance, Master Plumber',
-    date: 'August 18, 2026',
-    tags: ['Commercial Code', 'Restaurants', 'Grease Interceptors'],
+    title: 'Emergency Checklist: What to Do When a Concealed Water Pipe Bursts',
+    slug: 'emergency-concealed-pipe-burst-steps',
+    excerpt: 'Water gushing from bathroom tiles or ceiling? Follow these 4 immediate damage-control steps before our emergency rapid dispatch unit arrives at your doorstep.',
     content: [
-      'Municipal commercial plumbing codes require rigorous protection of potable water supplies from hazardous wastewater back-siphonage.',
-      'Key Compliance Pillars:',
-      '1. Indirect Waste & Air Gaps: All culinary prep sinks, ice machines, and commercial dishwashers must drain into floor sinks via physical air gaps (minimum 1-inch clearance) to prevent dirty water from siphoning backwards into food preparation surfaces.',
-      '2. Grease Interceptor Sizing: Grease traps must be sized based on total fixture flow rates (GPM) and cleaned before floating grease and settled solids exceed 25% of the total liquid depth.',
-      '3. Mandatory Backflow Certifications: Reduced pressure zone (RPZ) devices on commercial soda fountains, ice makers, and combi-ovens must be tested and certified annually by a licensed tester.'
-    ]
+      '1. Shut Down the Overhead Tank Valve: Immediately climb to the roof and close the main PVC ball valve coming out of the overhead water tank. If in an apartment, shut the main gate valve located in the duct or balcony.',
+      '2. Turn Off Water Motor Circuit Breaker: Cut power to suction or booster pumps to prevent continuous pressure buildup into fractured lines.',
+      '3. Open the Lowest Ground Taps: Relieve residual hydraulic pressure by opening external garden taps or ground-floor faucets.',
+      '4. Book Emergency Rapid Dispatch on KwikFix: Our emergency vehicle reaches your location equipped with acoustic leak detectors and quick-coupling repair sleeves.'
+    ],
+    category: 'emergency',
+    readTime: '3 min read',
+    author: 'Ustad Naveed Ahmed',
+    date: 'June 2026',
+    tags: ['Emergency Plumbing', 'Pipe Leak', '45 Min Arrival', 'Damage Control']
   }
 ];
 
 export const INITIAL_USERS: UserProfile[] = [
   {
-    id: 'usr-admin',
-    name: 'Sarah Jenkins',
-    email: 'admin@aquaproplumbing.com',
+    id: 'user-admin',
+    name: 'Hamza Khan (Operations Lead)',
+    email: 'admin@kwikfix.pk',
     role: 'admin',
-    phone: '(555) 019-2831',
+    phone: '0300-5945349',
     permissions: {
       canDispatch: true,
       canExportReports: true,
@@ -427,11 +421,11 @@ export const INITIAL_USERS: UserProfile[] = [
     }
   },
   {
-    id: 'usr-disp',
-    name: 'Mike Rodriguez',
-    email: 'dispatch@aquaproplumbing.com',
+    id: 'user-dispatcher',
+    name: 'Zeeshan Baig (Central Dispatch)',
+    email: 'dispatch@kwikfix.pk',
     role: 'dispatcher',
-    phone: '(555) 019-4422',
+    phone: '0321-8899100',
     permissions: {
       canDispatch: true,
       canExportReports: true,
@@ -441,11 +435,11 @@ export const INITIAL_USERS: UserProfile[] = [
     }
   },
   {
-    id: 'usr-tech',
-    name: 'Darius Cole',
-    email: 'darius.tech@aquaproplumbing.com',
+    id: 'user-tech',
+    name: 'Ustad Mohammad Tariq (Field Lead)',
+    email: 'm.tariq@kwikfix.pk',
     role: 'technician',
-    phone: '(555) 456-7890',
+    phone: '0300-4829101',
     permissions: {
       canDispatch: false,
       canExportReports: false,
@@ -455,11 +449,11 @@ export const INITIAL_USERS: UserProfile[] = [
     }
   },
   {
-    id: 'usr-cust',
-    name: 'Robert Henderson',
-    email: 'robert.h@gmail.com',
+    id: 'user-customer',
+    name: 'Khurram Shahzad (Customer)',
+    email: 'khurram.s@gmail.com',
     role: 'customer',
-    phone: '(555) 612-9011',
+    phone: '0300-8271920',
     permissions: {
       canDispatch: false,
       canExportReports: false,
@@ -472,82 +466,90 @@ export const INITIAL_USERS: UserProfile[] = [
 
 export const INITIAL_AUDIT_LOGS: AuditLog[] = [
   {
-    id: 'aud-101',
-    timestamp: '2026-09-13T03:45:10Z',
-    actor: 'Darius Cole',
+    id: 'log-101',
+    timestamp: '2026-09-13T03:40:00Z',
+    actor: 'Ustad Mohammad Tariq',
     role: 'technician',
     action: 'JOB_STATUS_UPDATED',
-    details: 'Updated booking PL-9421 to IN_PROGRESS. Added parts: 1-inch Brass Ball Valve.',
-    targetId: 'PL-9421',
+    details: 'Ticket #KF-8821 status updated to In Progress. Motor capacitor installed.',
+    targetId: 'KF-8821',
     status: 'success',
-    ip: '192.168.1.44'
+    ip: '110.39.42.18'
   },
   {
-    id: 'aud-102',
-    timestamp: '2026-09-13T03:32:00Z',
-    actor: 'Mike Rodriguez',
+    id: 'log-102',
+    timestamp: '2026-09-13T03:15:00Z',
+    actor: 'Zeeshan Baig',
     role: 'dispatcher',
     action: 'EMERGENCY_DISPATCH_TRIGGERED',
-    details: 'Dispatched Darius Cole to emergency water line rupture at 742 Evergreen Terrace.',
-    targetId: 'PL-9421',
-    status: 'warning',
-    ip: '10.0.0.12'
+    details: 'Dispatched Ustad Tariq to Phase 6 DHA for emergency water motor failure.',
+    targetId: 'KF-8821',
+    status: 'success',
+    ip: '182.180.98.5'
   },
   {
-    id: 'aud-103',
-    timestamp: '2026-09-12T15:00:20Z',
-    actor: 'Sarah Jenkins',
+    id: 'log-103',
+    timestamp: '2026-09-13T02:00:00Z',
+    actor: 'Hamza Khan',
     role: 'admin',
-    action: 'DATABASE_BACKUP_CREATED',
-    details: 'Scheduled nightly automated snapshot created successfully. Record count: 184.',
+    action: 'DATABASE_BACKUP_GENERATED',
+    details: 'Automated encrypted database snapshot created and verified. 184 active records.',
     status: 'success',
-    ip: '127.0.0.1'
-  },
-  {
-    id: 'aud-104',
-    timestamp: '2026-09-12T14:22:00Z',
-    actor: 'System Automation',
-    role: 'admin',
-    action: 'EMAIL_NOTIFICATION_SENT',
-    details: 'Automated booking confirmation email delivered to Amanda Phillips (amanda.p@outlook.com).',
-    targetId: 'PL-9419',
-    status: 'success',
-    ip: '127.0.0.1'
+    ip: '39.40.112.90'
   }
 ];
 
 export const INITIAL_EMAIL_LOGS: AutomatedEmailLog[] = [
   {
-    id: 'em-301',
-    recipientEmail: 'robert.h@gmail.com',
-    recipientName: 'Robert Henderson',
-    subject: 'URGENT: Emergency Plumber Dispatched - Ticket #PL-9421',
+    id: 'em-101',
+    recipientEmail: 'khurram.s@gmail.com',
+    recipientName: 'Khurram Shahzad',
+    subject: '🚨 EMERGENCY DISPATCH: Ustad Tariq is en route (Ticket #KF-8821)',
     templateType: 'emergency_alert',
-    previewText: 'Technician Darius Cole has been dispatched in Van-112. Estimated arrival in 18 minutes.',
-    bodyHtml: '<p>Dear Robert,</p><p>We received your emergency request for <strong>Emergency Pipe Leak & Burst Repair</strong>. Technician <strong>Darius Cole</strong> has been dispatched immediately.</p><p>Stay clear of standing electrical water. Emergency direct phone: (555) 456-7890.</p>',
-    timestamp: '2026-09-13T03:32:00Z',
+    previewText: 'Your emergency plumbing request has been assigned to Ustad Mohammad Tariq.',
+    bodyHtml: `
+      <div style="font-family: sans-serif; padding: 20px; color: #1e293b; max-width: 600px;">
+        <h2 style="color: #0284c7; margin-bottom: 5px;">KwikFix Plumbing Services</h2>
+        <div style="background: #fef2f2; border-left: 4px solid #ef4444; padding: 12px; margin-bottom: 16px;">
+          <strong style="color: #991b1b;">Emergency Crew En Route</strong><br/>
+          Ticket ID: <strong>KF-8821</strong> • Priority: <strong>Urgent (45 Min SLA)</strong>
+        </div>
+        <p>Dear Khurram Shahzad,</p>
+        <p>Your emergency plumbing dispatch request for <strong>Water Motor, Suction & Booster Pump Repair</strong> has been assigned to our senior verified master technician:</p>
+        <p style="background: #f8fafc; padding: 12px; border-radius: 8px;">
+          <strong>Technician:</strong> Ustad Mohammad Tariq (4.96 ★)<br/>
+          <strong>Direct Contact:</strong> 0300-4829101<br/>
+          <strong>Vehicle:</strong> KHI-8821 (Mobile Quick Unit)
+        </p>
+        <p>Please ensure clear access to the water motor and roof tank valve. Transparent upfront pricing applies upon diagnosis.</p>
+        <p style="font-size: 12px; color: #64748b;">24/7 Helpline: 0300-KWIKFIX | KwikFix.pk</p>
+      </div>
+    `,
+    timestamp: '2026-09-13T03:16:00Z',
     status: 'delivered'
   },
   {
-    id: 'em-302',
-    recipientEmail: 'amanda.p@outlook.com',
-    recipientName: 'Amanda Phillips',
-    subject: 'Appointment Confirmed: AquaPro Plumbing #PL-9419',
+    id: 'em-102',
+    recipientEmail: 'fatima.zafar@outlook.com',
+    recipientName: 'Fatima Zafar',
+    subject: 'Booking Confirmed: Plumbing Service for Tomorrow (Ticket #KF-8822)',
     templateType: 'booking_confirmation',
-    previewText: 'Your appointment is confirmed for Sep 14, 2026 (12:00 PM - 03:00 PM).',
-    bodyHtml: '<p>Hello Amanda,</p><p>Thank you for choosing AquaPro Plumbing. Your service visit for <strong>Water Heater Installation & Repair</strong> is confirmed.</p><p>Technician Marcus Vance will notify you 30 minutes before arrival.</p>',
-    timestamp: '2026-09-12T15:00:20Z',
-    status: 'delivered'
-  },
-  {
-    id: 'em-303',
-    recipientEmail: 'jdavis.contracting@gmail.com',
-    recipientName: 'Jonathan Davis',
-    subject: 'Service Completed & Receipt: AquaPro Plumbing #PL-9417',
-    templateType: 'job_completed',
-    previewText: 'Your Hydro-Jetting service has been completed with a 90-day warranty.',
-    bodyHtml: '<p>Hello Jonathan,</p><p>Your service ticket has been marked complete. Total charged: $380.00. Your warranty is active through December 11, 2026.</p>',
-    timestamp: '2026-09-11T16:35:00Z',
+    previewText: 'Your appointment for Tap & Muslim Shower repair has been scheduled.',
+    bodyHtml: `
+      <div style="font-family: sans-serif; padding: 20px; color: #1e293b; max-width: 600px;">
+        <h2 style="color: #0284c7;">KwikFix Plumbing Services</h2>
+        <p>Dear Fatima Zafar,</p>
+        <p>Thank you for choosing KwikFix! Your service appointment has been confirmed:</p>
+        <ul>
+          <li><strong>Service:</strong> Tap, Mixer & Muslim Shower Repair</li>
+          <li><strong>Schedule:</strong> Tomorrow, Morning (10:00 AM - 1:00 PM)</li>
+          <li><strong>Address:</strong> Apartment 304, Block 5, Clifton, Karachi</li>
+          <li><strong>Upfront Estimated Price:</strong> Rs. 650</li>
+        </ul>
+        <p>Our NADRA-verified technician will contact you 20 minutes before arrival. Pay safely via Cash, JazzCash, or Bank Transfer after the job is completed!</p>
+      </div>
+    `,
+    timestamp: '2026-09-13T01:31:00Z',
     status: 'delivered'
   }
 ];
@@ -557,7 +559,7 @@ export const INITIAL_NOTIFICATION_SETTINGS: NotificationSettings = {
   emailTechnicianDispatch: true,
   emailEmergencyAlerts: true,
   smsAlertsEnabled: true,
-  emergencySlaMinutes: 25,
-  dailyRevenueTarget: 3500,
+  emergencySlaMinutes: 35,
+  dailyRevenueTarget: 35000, // PKR
   soundAlerts: true
 };

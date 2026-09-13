@@ -1,6 +1,6 @@
 {
   "name": "AquaPro Plumbing & Emergency Services",
-  "description": "Comprehensive residential and commercial plumbing platform with online booking, emergency dispatch, live chat, service pricing, maintenance blog, RBAC management, offline caching, and analytics reporting.",
+  "description": "On-demand verified plumbing and home services platform inspired by KwikFix with transparent upfront pricing, 60-second booking, 24/7 emergency dispatch, WhatsApp integration, maintenance guides, and administrative analytics.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

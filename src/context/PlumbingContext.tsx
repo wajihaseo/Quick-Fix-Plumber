@@ -30,6 +30,14 @@ interface PlumbingContextType {
   isDark: boolean;
   toggleTheme: () => void;
   
+  // Location & Search (KwikFix)
+  selectedCity: string;
+  setSelectedCity: (city: string) => void;
+  searchFilter: string;
+  setSearchFilter: (term: string) => void;
+  openWhatsApp: (message?: string) => void;
+  whatsappNumber: string;
+  
   // Offline & Sync
   isOnline: boolean;
   isOfflineSimulated: boolean;
@@ -127,6 +135,17 @@ export const PlumbingProvider: React.FC<{ children: ReactNode }> = ({ children }
       return false;
     }
   });
+
+  // Location & Search (KwikFix)
+  const [selectedCity, setSelectedCity] = useState<string>('Karachi');
+  const [searchFilter, setSearchFilter] = useState<string>('');
+  const whatsappNumber = '03005945349';
+
+  const openWhatsApp = (customText?: string) => {
+    const text = customText || `Hello KwikFix, I need a verified plumber in ${selectedCity}. Please help me book an appointment.`;
+    const encoded = encodeURIComponent(text);
+    window.open(`https://wa.me/923005945349?text=${encoded}`, '_blank');
+  };
 
   // Offline detection & simulated toggle
   const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
@@ -400,7 +419,7 @@ export const PlumbingProvider: React.FC<{ children: ReactNode }> = ({ children }
   const createBooking = async (
     bookingData: Omit<Booking, 'id' | 'createdAt' | 'updatedAt' | 'status'>
   ): Promise<Booking> => {
-    const newId = `PL-${Math.floor(1000 + Math.random() * 9000)}`;
+    const newId = `KF-${Math.floor(1000 + Math.random() * 9000)}`;
     const now = new Date().toISOString();
     
     const newBooking: Booking = {
@@ -426,20 +445,20 @@ export const PlumbingProvider: React.FC<{ children: ReactNode }> = ({ children }
         newBooking.email,
         newBooking.customerName,
         'booking_confirmation',
-        `Appointment Confirmed: AquaPro Plumbing Ticket #${newId}`,
+        `Booking Confirmed: KwikFix Plumbing Ticket #${newId}`,
         `Your booking for ${newBooking.serviceCategory} is scheduled for ${newBooking.preferredDate} (${newBooking.timeSlot}).`,
         `<div style="font-family: sans-serif; padding: 20px; line-height: 1.6;">
-          <h2 style="color: #0284c7;">AquaPro Plumbing & Emergency Services</h2>
+          <h2 style="color: #0284c7;">KwikFix - Verified Plumbing & Home Services</h2>
           <p>Dear <strong>${newBooking.customerName}</strong>,</p>
-          <p>Your appointment has been successfully confirmed. A licensed plumbing specialist has been assigned to your request.</p>
+          <p>Your appointment has been successfully confirmed. A NADRA-verified plumbing specialist has been assigned to your request.</p>
           <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
           <p><strong>Booking ID:</strong> ${newId}</p>
           <p><strong>Service:</strong> ${newBooking.serviceCategory}</p>
           <p><strong>Schedule:</strong> ${newBooking.preferredDate} (${newBooking.timeSlot})</p>
           <p><strong>Service Location:</strong> ${newBooking.address}, ${newBooking.city}</p>
-          <p><strong>Estimated Initial Fee:</strong> $${newBooking.estimatedPrice}</p>
+          <p><strong>Estimated Initial Fee:</strong> Rs. ${newBooking.estimatedPrice}</p>
           <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;" />
-          <p style="font-size: 13px; color: #64748b;">Need to reschedule or speak with dispatch? Call our 24/7 hotline at (800) 555-AQUA.</p>
+          <p style="font-size: 13px; color: #64748b;">Need immediate assistance? WhatsApp us at 0300-KWIKFIX or call 0300-5945349.</p>
         </div>`
       );
     }
@@ -457,7 +476,7 @@ export const PlumbingProvider: React.FC<{ children: ReactNode }> = ({ children }
     description: string;
     clientType: 'residential' | 'commercial';
   }): Promise<Booking> => {
-    const newId = `EMG-${Math.floor(1000 + Math.random() * 9000)}`;
+    const newId = `EMG-KF-${Math.floor(1000 + Math.random() * 9000)}`;
     const now = new Date().toISOString();
 
     // Auto-assign available emergency tech
@@ -466,7 +485,7 @@ export const PlumbingProvider: React.FC<{ children: ReactNode }> = ({ children }
     const newBooking: Booking = {
       id: newId,
       customerName: emergencyData.customerName,
-      email: 'emergency-dispatch@aquaproplumbing.com',
+      email: 'emergency-dispatch@kwikfix.pk',
       phone: emergencyData.phone,
       address: emergencyData.address,
       city: emergencyData.city,
@@ -474,16 +493,16 @@ export const PlumbingProvider: React.FC<{ children: ReactNode }> = ({ children }
       serviceCategory: `Emergency: ${emergencyData.issueType}`,
       priority: 'emergency',
       preferredDate: new Date().toISOString().split('T')[0],
-      timeSlot: 'Immediate Dispatch (<30m)',
+      timeSlot: 'Immediate Dispatch (<45m)',
       description: emergencyData.description,
-      estimatedPrice: emergencyData.clientType === 'commercial' ? 350 : 220,
+      estimatedPrice: emergencyData.clientType === 'commercial' ? 4500 : 1500,
       status: 'dispatched',
       assignedTechnicianId: availableTech.id,
       assignedTechnicianName: availableTech.name,
       createdAt: now,
       updatedAt: now,
       isEmergency: true,
-      technicianNotes: `Priority emergency dispatched. Van ${availableTech.vehicleNumber} en route.`
+      technicianNotes: `Priority emergency dispatched. Mobile Unit ${availableTech.vehicleNumber} en route to ${emergencyData.address}.`
     };
 
     setBookings(prev => [newBooking, ...prev]);
@@ -715,41 +734,48 @@ export const PlumbingProvider: React.FC<{ children: ReactNode }> = ({ children }
     // Intelligent triage bot response
     setTimeout(() => {
       const lower = text.toLowerCase();
-      let botReply = "Thank you for reaching out to AquaPro Plumbing! Our master plumbers are on standby. How else can we help you today?";
+      let botReply = `Assalam-o-Alaikum! Welcome to KwikFix Verified Plumbing. We have NADRA-verified plumbers available across ${selectedCity} (Karachi, Lahore & Islamabad) with 45-minute arrival. How can we help you today?`;
       let quickAction: ChatMessage['quickAction'] = undefined;
 
-      if (lower.includes('leak') || lower.includes('burst') || lower.includes('flood') || lower.includes('overflow') || lower.includes('urgent')) {
-        botReply = "⚠️ CRITICAL WATER ALERT: If you have active flooding or a ruptured line, please immediately turn off your main shutoff valve (usually located in your basement or beside the water meter). We can dispatch an emergency technician right now!";
+      if (lower.includes('motor') || lower.includes('pump') || lower.includes('donkey') || lower.includes('suction')) {
+        botReply = "⚙️ Water Motor & Suction Pump Service: If your motor is humming, overheating, or water is not reaching the overhead roof tank, our verified expert can check the capacitor, shaft seal, and priming. Starting from Rs. 1,400 with same-day arrival!";
         quickAction = {
-          label: '🚨 Instant Emergency Dispatch',
+          label: '📅 Book Water Motor Expert',
+          actionType: 'open_booking',
+          prefillData: { serviceCategory: 'Water Motor, Suction & Booster Pump Repair' }
+        };
+      } else if (lower.includes('geyser') || lower.includes('gyser') || lower.includes('gas') || lower.includes('hot water')) {
+        botReply = "🔥 Geyser Repair & Fitting: We service both Instant Gas Geysers and Electric Storage Geysers. Diagnosis, burner cleaning, thermostat & element replacement from Rs. 1,200!";
+        quickAction = {
+          label: '📅 Book Geyser Service',
+          actionType: 'open_booking',
+          prefillData: { serviceCategory: 'Instant Gas & Electric Geyser Repair / Fitting' }
+        };
+      } else if (lower.includes('tank') || lower.includes('safai') || lower.includes('cleaning')) {
+        botReply = "🌊 Water Tank Mechanized Cleaning: We use 150-Bar rotary jet machines, sludge pumps, and anti-bacterial disinfection for underground and overhead tanks. Package starts at Rs. 2,999.";
+        quickAction = {
+          label: '📅 Book Tank Cleaning',
+          actionType: 'open_booking',
+          prefillData: { serviceCategory: 'Underground & Overhead Water Tank Mechanized Cleaning' }
+        };
+      } else if (lower.includes('leak') || lower.includes('burst') || lower.includes('flood') || lower.includes('urgent') || lower.includes('emergency')) {
+        botReply = "🚨 45-MINUTE EMERGENCY RESPONSE: Please immediately turn off your main roof tank valve or water motor switch! Our emergency plumber is ready to be dispatched with tools and acoustic leak detector.";
+        quickAction = {
+          label: '🚨 Dispatch 45-Min Emergency Plumber',
           actionType: 'emergency_call'
         };
-      } else if (lower.includes('heater') || lower.includes('hot water') || lower.includes('cold water')) {
-        botReply = "For water heater issues (cold water, leaks, or pilot lights going out), our diagnostic visit starts at $95 (waived with repair). Would you like to schedule an appointment?";
+      } else if (lower.includes('tap') || lower.includes('shower') || lower.includes('commode') || lower.includes('toilet') || lower.includes('mixer')) {
+        botReply = "🚰 Sanitary & Tap Fittings: Leak fixes, Muslim shower replacement, mixer installation, and commode flush tank repair starting from Rs. 450 per point. Fixed transparent rates!";
         quickAction = {
-          label: '📅 Schedule Water Heater Check',
+          label: '📅 Book Sanitary Repair',
           actionType: 'open_booking',
-          prefillData: { serviceCategory: 'Water Heater Installation & Repair' }
+          prefillData: { serviceCategory: 'Tap, Mixer & Muslim Shower Repair / Fitting' }
         };
-      } else if (lower.includes('clog') || lower.includes('drain') || lower.includes('sink') || lower.includes('toilet')) {
-        botReply = "We provide both conventional auger cabling and 4,000 PSI hydro-jetting with free sewer camera inspection included on all whole-house drain clearings!";
+      } else if (lower.includes('price') || lower.includes('cost') || lower.includes('rate') || lower.includes('charges')) {
+        botReply = "💰 Transparent Upfront Pricing: Taps/Mixers from Rs. 450, Commode repair Rs. 850, Drain unclogging Rs. 999, Geyser repair Rs. 1,200, Water Motor Rs. 1,400, Tank cleaning Rs. 2,999. Pay cash, JazzCash or bank transfer after job completion!";
         quickAction = {
-          label: '📅 Book Drain Cleaning',
-          actionType: 'open_booking',
-          prefillData: { serviceCategory: 'Hydro-Jetting & Severe Drain Cleaning' }
-        };
-      } else if (lower.includes('price') || lower.includes('cost') || lower.includes('quote') || lower.includes('rate')) {
-        botReply = "We believe in 100% upfront flat-rate pricing with zero hidden fees. Drain cleaning starts at $195, pipe repairs from $180, and water heater diagnostic is $95. All repairs include our 1-year warranty.";
-        quickAction = {
-          label: '📅 Book Service Online',
+          label: '📅 View Services & Book',
           actionType: 'open_booking'
-        };
-      } else if (lower.includes('commercial') || lower.includes('restaurant') || lower.includes('grease') || lower.includes('backflow')) {
-        botReply = "We provide certified commercial services including mandatory annual backflow testing, high-capacity grease interceptor pumping, and code-compliance reports for facilities.";
-        quickAction = {
-          label: '🏢 Schedule Commercial Service',
-          actionType: 'open_booking',
-          prefillData: { clientType: 'commercial' }
         };
       }
 
@@ -811,7 +837,13 @@ export const PlumbingProvider: React.FC<{ children: ReactNode }> = ({ children }
       isChatOpen,
       toggleChat,
       setIsChatOpen,
-      unreadChatCount
+      unreadChatCount,
+      selectedCity,
+      setSelectedCity,
+      searchFilter,
+      setSearchFilter,
+      openWhatsApp,
+      whatsappNumber
     }}>
       {children}
     </PlumbingContext.Provider>

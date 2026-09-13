@@ -7,13 +7,14 @@ import {
   Building, 
   CheckCircle2, 
   AlertTriangle, 
-  ArrowRight,
+  ArrowRight, 
   ShieldCheck,
   MapPin,
   Mail,
   User,
   Phone,
-  FileText
+  FileText,
+  MessageCircle
 } from 'lucide-react';
 import { usePlumbing } from '../context/PlumbingContext';
 import { ClientType, JobPriority } from '../types';
@@ -26,7 +27,9 @@ export const BookingModal: React.FC = () => {
     services, 
     createBooking,
     isOnline,
-    isOfflineSimulated
+    isOfflineSimulated,
+    selectedCity,
+    openWhatsApp
   } = usePlumbing();
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -34,14 +37,14 @@ export const BookingModal: React.FC = () => {
   const [serviceCategory, setServiceCategory] = useState<string>('');
   const [priority, setPriority] = useState<JobPriority>('standard');
   const [preferredDate, setPreferredDate] = useState<string>('');
-  const [timeSlot, setTimeSlot] = useState<string>('Morning (08:00 AM - 11:00 AM)');
+  const [timeSlot, setTimeSlot] = useState<string>('Morning (09:00 AM - 12:00 PM)');
   
   // Contact details
   const [customerName, setCustomerName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [city, setCity] = useState('Springfield Metro');
+  const [city, setCity] = useState(selectedCity || 'Karachi');
   const [description, setDescription] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,6 +58,11 @@ export const BookingModal: React.FC = () => {
     tomorrow.setDate(tomorrow.getDate() + 1);
     setPreferredDate(tomorrow.toISOString().split('T')[0]);
   }, []);
+
+  // Sync city when selectedCity changes
+  useEffect(() => {
+    if (selectedCity) setCity(selectedCity);
+  }, [selectedCity]);
 
   // Update prefilled service if changed
   useEffect(() => {
@@ -72,13 +80,13 @@ export const BookingModal: React.FC = () => {
   if (!isBookingModalOpen) return null;
 
   const currentServiceObj = services.find(s => s.title === serviceCategory) || services[0];
-  const basePrice = currentServiceObj ? currentServiceObj.basePrice : 180;
-  const estimatedTotal = priority === 'urgent' ? basePrice + 50 : priority === 'emergency' ? basePrice + 120 : basePrice;
+  const basePrice = currentServiceObj ? currentServiceObj.basePrice : 1400;
+  const estimatedTotal = priority === 'urgent' ? basePrice + 300 : priority === 'emergency' ? basePrice + 600 : basePrice;
 
   const handleCompleteBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!customerName || !phone || !address) {
-      alert('Please fill in your name, contact phone, and service address.');
+      alert('Please fill in your name, contact phone (03xx-xxxxxxx), and address.');
       return;
     }
 
@@ -86,16 +94,16 @@ export const BookingModal: React.FC = () => {
     try {
       const created = await createBooking({
         customerName,
-        email: email || `${customerName.toLowerCase().replace(/\s+/g, '')}@client.com`,
+        email: email || `${customerName.toLowerCase().replace(/\s+/g, '')}@client.pk`,
         phone,
         address,
-        city,
+        city: city || selectedCity,
         clientType,
-        serviceCategory: serviceCategory || 'Standard Plumbing Diagnostic',
+        serviceCategory: serviceCategory || 'General Plumbing Inspection',
         priority,
         preferredDate,
         timeSlot,
-        description: description || 'Routine inspection & repair request',
+        description: description || 'Home plumbing service requested',
         estimatedPrice: estimatedTotal,
         isEmergency: priority === 'emergency'
       });
@@ -127,13 +135,18 @@ export const BookingModal: React.FC = () => {
               <Calendar className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
-                {step === 3 ? 'Booking Confirmed!' : 'Schedule Plumbing Appointment'}
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                  {step === 3 ? 'Booking Confirmed!' : 'Book KwikFix Plumber'}
+                </h3>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
+                  {city}
+                </span>
+              </div>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 {step === 1 && 'Step 1 of 2: Service & Schedule Details'}
                 {step === 2 && 'Step 2 of 2: Location & Contact Information'}
-                {step === 3 && 'Automated confirmation sent & technician assigned'}
+                {step === 3 && 'NADRA-verified Ustad assigned with 7-Day Guarantee'}
               </p>
             </div>
           </div>
@@ -154,7 +167,7 @@ export const BookingModal: React.FC = () => {
               {/* Residential vs Commercial */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  Client Property Type
+                  Premise Type
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
@@ -167,7 +180,7 @@ export const BookingModal: React.FC = () => {
                     }`}
                   >
                     <Home className="w-4 h-4" />
-                    <span>Residential Property</span>
+                    <span>Residential (House / Flat)</span>
                   </button>
 
                   <button
@@ -180,7 +193,7 @@ export const BookingModal: React.FC = () => {
                     }`}
                   >
                     <Building className="w-4 h-4" />
-                    <span>Commercial &amp; Facility</span>
+                    <span>Commercial (Shop / Office / Plaza)</span>
                   </button>
                 </div>
               </div>
@@ -188,16 +201,16 @@ export const BookingModal: React.FC = () => {
               {/* Service Selection */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">
-                  Required Plumbing Service
+                  Select Plumbing Job
                 </label>
                 <select
                   value={serviceCategory}
                   onChange={(e) => setServiceCategory(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none font-medium"
                 >
                   {services.map(s => (
                     <option key={s.id} value={s.title}>
-                      {s.title} (Starts at ${s.basePrice})
+                      {s.title} (From Rs. {s.basePrice.toLocaleString()})
                     </option>
                   ))}
                 </select>
@@ -206,13 +219,13 @@ export const BookingModal: React.FC = () => {
               {/* Priority level */}
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
-                  Urgency Level
+                  Dispatch Priority
                 </label>
                 <div className="grid grid-cols-3 gap-2 sm:gap-3">
                   {[
-                    { val: 'standard', label: 'Standard', desc: 'Routine visit', badge: 'Base' },
-                    { val: 'urgent', label: 'Same Day', desc: 'Within 4 hours', badge: '+$50' },
-                    { val: 'emergency', label: 'Emergency', desc: '<30 min dispatch', badge: '+$120' }
+                    { val: 'standard', label: 'Standard Slot', desc: 'Scheduled visit', badge: 'Standard Rate' },
+                    { val: 'urgent', label: 'Same Day', desc: 'Within 2-3 hours', badge: '+ Rs. 300' },
+                    { val: 'emergency', label: 'Emergency', desc: '< 45 min arrival', badge: '+ Rs. 600' }
                   ].map(item => (
                     <button
                       key={item.val}
@@ -261,12 +274,12 @@ export const BookingModal: React.FC = () => {
                     onChange={(e) => setTimeSlot(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
                   >
-                    <option value="Morning (08:00 AM - 11:00 AM)">Morning (08:00 AM - 11:00 AM)</option>
-                    <option value="Midday (11:00 AM - 02:00 PM)">Midday (11:00 AM - 02:00 PM)</option>
-                    <option value="Afternoon (02:00 PM - 05:00 PM)">Afternoon (02:00 PM - 05:00 PM)</option>
-                    <option value="Evening (05:00 PM - 08:00 PM)">Evening (05:00 PM - 08:00 PM)</option>
+                    <option value="Morning (09:00 AM - 12:00 PM)">Morning (09:00 AM - 12:00 PM)</option>
+                    <option value="Afternoon (12:00 PM - 03:00 PM)">Afternoon (12:00 PM - 03:00 PM)</option>
+                    <option value="Evening (03:00 PM - 06:00 PM)">Evening (03:00 PM - 06:00 PM)</option>
+                    <option value="Night (06:00 PM - 09:00 PM)">Night (06:00 PM - 09:00 PM)</option>
                     {priority === 'emergency' && (
-                      <option value="Immediate Dispatch (<30m)">Immediate Dispatch (&lt;30m)</option>
+                      <option value="Immediate 45-Min Urgent Dispatch">Immediate 45-Min Urgent Dispatch</option>
                     )}
                   </select>
                 </div>
@@ -275,14 +288,14 @@ export const BookingModal: React.FC = () => {
               {/* Step 1 Actions */}
               <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
                 <div className="text-xs text-slate-500">
-                  Est. Initial Cost: <strong className="text-sm font-bold text-sky-600 dark:text-sky-400">${estimatedTotal}</strong>
+                  Est. Upfront Rate: <strong className="text-sm font-black text-sky-600 dark:text-sky-400 font-mono">Rs. {estimatedTotal.toLocaleString()}</strong>
                 </div>
                 <button
                   type="button"
                   onClick={() => setStep(2)}
                   className="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm flex items-center space-x-1.5 shadow"
                 >
-                  <span>Continue to Contact Info</span>
+                  <span>Continue to Address &amp; Contact</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -302,7 +315,7 @@ export const BookingModal: React.FC = () => {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Amanda Phillips"
+                      placeholder="e.g. Asad Farooq"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                       className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
@@ -312,17 +325,17 @@ export const BookingModal: React.FC = () => {
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                    Phone Number (for SMS dispatch alerts) *
+                    Mobile Phone (For SMS &amp; WhatsApp Arrival) *
                   </label>
                   <div className="relative">
                     <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                     <input
                       type="tel"
                       required
-                      placeholder="(555) 000-0000"
+                      placeholder="0300-1234567"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
+                      className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none font-mono"
                     />
                   </div>
                 </div>
@@ -331,13 +344,13 @@ export const BookingModal: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                    Email (for automated confirmation receipt)
+                    Email (for invoice &amp; warranty certificate)
                   </label>
                   <div className="relative">
                     <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                     <input
                       type="email"
-                      placeholder="name@example.com"
+                      placeholder="e.g. name@domain.pk"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
@@ -347,27 +360,30 @@ export const BookingModal: React.FC = () => {
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                    City / Service Region
+                    City
                   </label>
-                  <input
-                    type="text"
+                  <select
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
-                  />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none font-semibold"
+                  >
+                    <option value="Karachi">Karachi</option>
+                    <option value="Lahore">Lahore</option>
+                    <option value="Islamabad">Islamabad</option>
+                  </select>
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                  Street Address &amp; Unit / Suite *
+                  Complete Address &amp; Area (House #, Street, Sector / Block) *
                 </label>
                 <div className="relative">
                   <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                   <input
                     type="text"
                     required
-                    placeholder="e.g. 418 Pine Ridge Circle"
+                    placeholder="e.g. House 42-B, Street 14, Phase 6, DHA"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
@@ -377,13 +393,13 @@ export const BookingModal: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                  Specific Issue Details or Notes for Technician
+                  Any specific notes or details (e.g. Golden pump model, Master mixer, 2nd floor)
                 </label>
                 <div className="relative">
                   <FileText className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                   <textarea
                     rows={2}
-                    placeholder="e.g. Water dripping under kitchen sink, valve difficult to turn off..."
+                    placeholder="e.g. Water motor making buzzing noise and trip switch triggering..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className="w-full pl-9 pr-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-sky-500 focus:outline-none"
@@ -391,15 +407,14 @@ export const BookingModal: React.FC = () => {
                 </div>
               </div>
 
-              {/* Offline cache notice banner if offline */}
-              {!effectiveOnline && (
-                <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-xs text-amber-800 dark:text-amber-300 flex items-center space-x-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
-                  <span>
-                    Offline caching active: Your booking will be safely stored locally and synchronized as soon as connection is re-established.
-                  </span>
-                </div>
-              )}
+              {/* Payment Notice */}
+              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>No advance payment needed. Pay safely to the technician after job completion.</span>
+                </span>
+                <span className="font-bold text-sky-600 dark:text-sky-400">Cash / JazzCash</span>
+              </div>
 
               {/* Buttons */}
               <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
@@ -417,11 +432,11 @@ export const BookingModal: React.FC = () => {
                   className="px-6 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm shadow-md transition-all flex items-center space-x-2"
                 >
                   {isSubmitting ? (
-                    <span>Scheduling...</span>
+                    <span>Confirming Booking...</span>
                   ) : (
                     <>
                       <CheckCircle2 className="w-4 h-4" />
-                      <span>Confirm &amp; Dispatch Plumber</span>
+                      <span>Confirm &amp; Dispatch Ustad</span>
                     </>
                   )}
                 </button>
@@ -438,7 +453,7 @@ export const BookingModal: React.FC = () => {
 
               <div>
                 <h4 className="text-xl font-extrabold text-slate-900 dark:text-white">
-                  Appointment Confirmed!
+                  KwikFix Booking Confirmed!
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
                   Ticket Reference Number: <strong className="text-sky-600 dark:text-sky-400 font-mono text-base">{submittedBookingId}</strong>
@@ -451,6 +466,10 @@ export const BookingModal: React.FC = () => {
                   <span className="font-semibold">{serviceCategory}</span>
                 </div>
                 <div className="flex justify-between">
+                  <span className="text-slate-500">Estimated Cost:</span>
+                  <span className="font-mono font-bold text-emerald-600">Rs. {estimatedTotal.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between">
                   <span className="text-slate-500">Schedule:</span>
                   <span className="font-semibold">{preferredDate} ({timeSlot})</span>
                 </div>
@@ -459,18 +478,27 @@ export const BookingModal: React.FC = () => {
                   <span className="font-semibold">{address}, {city}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Automated Notification:</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-medium">Email Sent to {email || customerName}</span>
+                  <span className="text-slate-500">Technician:</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-medium">NADRA Verified Staff Dispatched</span>
                 </div>
               </div>
 
-              <div className="pt-4">
+              <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => openWhatsApp(`Hi KwikFix, I just booked ticket ${submittedBookingId} for ${serviceCategory} at ${address}, ${city}. Please confirm plumber ETA.`)}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Send Ticket to WhatsApp</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={resetAndClose}
-                  className="px-6 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs sm:text-sm font-semibold"
                 >
-                  Done &amp; Return to Website
+                  Close &amp; Return
                 </button>
               </div>
             </div>

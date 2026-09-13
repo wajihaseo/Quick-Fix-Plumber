@@ -12,7 +12,10 @@ import {
   Calendar, 
   AlertTriangle, 
   UserCheck,
-  ChevronDown
+  ChevronDown,
+  MapPin,
+  MessageCircle,
+  CheckCircle2
 } from 'lucide-react';
 import { usePlumbing } from '../context/PlumbingContext';
 import { UserRole } from '../types';
@@ -33,32 +36,43 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
     switchRole,
     currentUser,
     openBookingModal,
-    openEmergencyModal
+    openEmergencyModal,
+    selectedCity,
+    setSelectedCity,
+    openWhatsApp
   } = usePlumbing();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
+  const [isCityDropdownOpen, setIsCityDropdownOpen] = useState(false);
 
   const effectiveOnline = isOnline && !isOfflineSimulated;
 
+  const CITIES = ['Karachi', 'Lahore', 'Islamabad'];
+
   const roleOptions: { role: UserRole; label: string; desc: string }[] = [
-    { role: 'customer', label: 'Customer Portal', desc: 'Browse services, book & view my tickets' },
-    { role: 'dispatcher', label: 'Dispatcher Desk', desc: 'Live dispatch board, assign crews' },
-    { role: 'technician', label: 'Technician View', desc: 'Active assigned field tickets & parts' },
-    { role: 'admin', label: 'Administrator', desc: 'Full system, analytics, backups, audit logs' }
+    { role: 'customer', label: 'Customer View', desc: 'Browse services, book & view my tickets' },
+    { role: 'dispatcher', label: 'Central Dispatch Desk', desc: 'Live dispatch board, assign field ustads' },
+    { role: 'technician', label: 'Technician View', desc: 'Active assigned field jobs & spare parts' },
+    { role: 'admin', label: 'Administrator Portal', desc: 'Analytics, backups, audit logs, revenue' }
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md transition-colors">
-      {/* Top emergency & system quick bar */}
-      <div className="bg-slate-900 dark:bg-slate-950 text-white text-xs px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md transition-colors shadow-xs">
+      {/* Top emergency & system quick bar (KwikFix style) */}
+      <div className="bg-slate-950 text-white text-xs px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
         <div className="flex items-center space-x-3 text-slate-300">
           <span className="flex items-center font-medium text-emerald-400">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-1.5"></span>
-            24/7 Rapid Dispatch: Average arrival &lt; 26 mins
+            Doorstep in 45 Mins in {selectedCity}
           </span>
           <span className="hidden md:inline text-slate-600">|</span>
-          <span className="hidden md:inline">Licensed Master Plumber Lic #MP-882910</span>
+          <span className="hidden md:inline text-slate-400 flex items-center gap-1">
+            <CheckCircle2 className="w-3.5 h-3.5 text-sky-400" />
+            NADRA CNIC Verified Staff
+          </span>
+          <span className="hidden lg:inline text-slate-600">|</span>
+          <span className="hidden lg:inline text-slate-400">7-Day Free Rework Guarantee</span>
         </div>
 
         <div className="flex items-center space-x-3 ml-auto">
@@ -76,23 +90,33 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
             {effectiveOnline ? (
               <>
                 <Wifi className="w-3 h-3 text-emerald-400" />
-                <span>Online (Cached)</span>
+                <span className="hidden sm:inline">Online (Sync Active)</span>
               </>
             ) : (
               <>
                 <WifiOff className="w-3 h-3 text-amber-400" />
-                <span>Offline Mode (Cached Active)</span>
+                <span>Offline Mode</span>
               </>
             )}
           </button>
 
+          {/* WhatsApp Direct Chat */}
+          <button
+            onClick={() => openWhatsApp()}
+            className="flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 font-medium text-[11px]"
+            title="Chat directly on WhatsApp"
+          >
+            <MessageCircle className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">WhatsApp Help</span>
+          </button>
+
           {/* Quick Hotline direct link */}
           <a 
-            href="tel:18005552782" 
+            href="tel:03005945349" 
             className="flex items-center space-x-1 text-sky-400 hover:text-sky-300 font-semibold tracking-wide"
           >
             <PhoneCall className="w-3 h-3" />
-            <span>(800) 555-AQUA</span>
+            <span>0300-5945349</span>
           </a>
         </div>
       </div>
@@ -100,26 +124,73 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
       {/* Primary navigation bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-18">
-          {/* Brand Logo */}
-          <div 
-            onClick={() => setActiveTab('home')}
-            className="flex items-center space-x-3 cursor-pointer group select-none"
-          >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
-              <Wrench className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-1.5">
-                <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                  Aqua<span className="text-sky-600 dark:text-sky-400">Pro</span>
-                </span>
-                <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
-                  Plumbing
-                </span>
+          {/* Brand Logo (KwikFix aesthetic) */}
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <div 
+              onClick={() => setActiveTab('home')}
+              className="flex items-center space-x-2.5 cursor-pointer group select-none"
+            >
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
+                <Wrench className="w-5 h-5 text-white" />
               </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                Residential &amp; Commercial 24/7
-              </p>
+              <div>
+                <div className="flex items-center space-x-1.5">
+                  <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+                    Kwik<span className="text-sky-600 dark:text-sky-400">Fix</span>
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                    Verified
+                  </span>
+                </div>
+                <p className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-none">
+                  Plumbing &amp; Home Services
+                </p>
+              </div>
+            </div>
+
+            {/* City Selector (KwikFix hallmark) */}
+            <div className="relative">
+              <button
+                id="city-selector-btn"
+                onClick={() => setIsCityDropdownOpen(!isCityDropdownOpen)}
+                className="flex items-center space-x-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-750 transition-colors"
+                title="Select your city"
+              >
+                <MapPin className="w-3.5 h-3.5 text-rose-500" />
+                <span className="font-semibold">{selectedCity}</span>
+                <ChevronDown className="w-3 h-3 text-slate-400" />
+              </button>
+
+              {isCityDropdownOpen && (
+                <div 
+                  className="absolute left-0 mt-2 w-44 rounded-xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-800 py-1.5 z-50 animate-in fade-in zoom-in-95 duration-150"
+                  onMouseLeave={() => setIsCityDropdownOpen(false)}
+                >
+                  <div className="px-3 py-1.5 border-b border-slate-100 dark:border-slate-800 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    Coverage Area
+                  </div>
+                  {CITIES.map(city => (
+                    <button
+                      key={city}
+                      onClick={() => {
+                        setSelectedCity(city);
+                        setIsCityDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between transition-colors ${
+                        selectedCity === city
+                          ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 font-semibold'
+                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <MapPin className="w-3 h-3 text-slate-400" />
+                        {city}
+                      </span>
+                      {selectedCity === city && <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -134,7 +205,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
-              Services &amp; Pricing
+              Services &amp; Rates
             </button>
 
             <button
@@ -143,7 +214,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
               className="px-3 py-2 rounded-lg text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center space-x-1 transition-colors"
             >
               <AlertTriangle className="w-4 h-4 text-rose-500 animate-pulse" />
-              <span>Emergency 24/7</span>
+              <span>45-Min Emergency</span>
             </button>
 
             <button
@@ -155,7 +226,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
-              Maintenance Tips
+              DIY Tips &amp; Guides
             </button>
 
             <button
@@ -167,7 +238,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
                   : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
-              Client Reviews
+              Verified Reviews
             </button>
 
             {/* Portal Tab */}
@@ -187,6 +258,15 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
 
           {/* Right Action Controls */}
           <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* WhatsApp Quick Link */}
+            <button
+              onClick={() => openWhatsApp()}
+              className="hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold hover:bg-emerald-100 transition-colors"
+            >
+              <MessageCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span>WhatsApp</span>
+            </button>
+
             {/* Dark Mode Toggle */}
             <button
               id="theme-toggle-btn"
@@ -195,7 +275,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
               aria-label="Toggle dark mode"
               title={isDark ? "Switch to light mode" : "Switch to dark mode"}
             >
-              {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
+              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
             </button>
 
             {/* Role Switcher Dropdown */}
@@ -218,7 +298,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
                 >
                   <div className="px-3 py-2 border-b border-slate-100 dark:border-slate-800">
                     <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">
-                      Active User: {currentUser.name}
+                      Active: {currentUser.name}
                     </p>
                     <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                       Select Role to Test RBAC:
@@ -254,10 +334,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
             <button
               id="nav-book-now"
               onClick={() => openBookingModal()}
-              className="hidden sm:flex items-center space-x-1.5 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold shadow-sm shadow-sky-600/30 transition-all hover:shadow"
+              className="hidden sm:flex items-center space-x-1.5 px-3.5 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold shadow-sm shadow-sky-600/30 transition-all hover:shadow"
             >
               <Calendar className="w-4 h-4" />
-              <span>Book Service</span>
+              <span>Book in 60s</span>
             </button>
 
             {/* Mobile menu hamburger button */}
@@ -275,7 +355,24 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2">
+        <div className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-2 shadow-lg">
+          <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+            <span className="text-xs font-semibold text-slate-500">Selected City:</span>
+            <div className="flex gap-1.5">
+              {CITIES.map(c => (
+                <button
+                  key={c}
+                  onClick={() => setSelectedCity(c)}
+                  className={`text-xs px-2.5 py-1 rounded-md font-medium ${
+                    selectedCity === c ? 'bg-sky-600 text-white font-bold' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <button
             onClick={() => {
               setActiveTab('home');
@@ -293,7 +390,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
             className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center space-x-2"
           >
             <AlertTriangle className="w-4 h-4" />
-            <span>Emergency 24/7 Callout</span>
+            <span>45-Min Emergency Callout</span>
           </button>
           <button
             onClick={() => {
@@ -311,7 +408,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
             }}
             className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
           >
-            Customer Testimonials
+            Customer Reviews
           </button>
           <button
             onClick={() => {
@@ -323,15 +420,25 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
             <Shield className="w-4 h-4" />
             <span>Admin &amp; Operations Dashboard</span>
           </button>
-          <div className="pt-2 border-t border-slate-200 dark:border-slate-800">
+          
+          <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex gap-2">
             <button
               onClick={() => {
                 openBookingModal();
                 setIsMobileMenuOpen(false);
               }}
-              className="w-full py-2.5 rounded-lg bg-sky-600 text-white font-semibold text-center text-sm shadow"
+              className="flex-1 py-2.5 rounded-lg bg-sky-600 text-white font-semibold text-center text-sm shadow"
             >
-              Book Service Appointment
+              Book Service
+            </button>
+            <button
+              onClick={() => {
+                openWhatsApp();
+                setIsMobileMenuOpen(false);
+              }}
+              className="px-4 py-2.5 rounded-lg bg-emerald-600 text-white font-semibold text-center text-sm shadow flex items-center justify-center"
+            >
+              <MessageCircle className="w-4 h-4" />
             </button>
           </div>
         </div>

@@ -158,7 +158,7 @@ export const TestimonialsSection: React.FC = () => {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
             <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-2xl">
               <h3 className="text-base font-bold text-slate-900 dark:text-white mb-3">
-                Share Your Experience with AquaPro
+                Share Your Experience with KwikFix
               </h3>
               <form onSubmit={handleAddReview} className="space-y-3 text-xs">
                 <div>

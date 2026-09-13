@@ -41,7 +41,7 @@ export interface ServiceItem {
   id: string;
   title: string;
   category: 'residential' | 'commercial' | 'both';
-  basePrice: number;
+  basePrice: number; // In PKR (Rs.)
   pricingType: 'fixed' | 'hourly' | 'from';
   estimatedDuration: string;
   description: string;
@@ -49,6 +49,7 @@ export interface ServiceItem {
   popular?: boolean;
   emergencyAvailable: boolean;
   iconName: string;
+  serviceGroup?: string;
 }
 
 export interface Technician {
@@ -62,6 +63,9 @@ export interface Technician {
   status: 'available' | 'on_job' | 'off_duty';
   vehicleNumber: string;
   currentLocation?: string;
+  city?: string;
+  cnicVerified?: boolean;
+  experienceYears?: number;
 }
 
 export interface CustomerTestimonial {

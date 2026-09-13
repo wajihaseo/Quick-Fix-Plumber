@@ -8,7 +8,8 @@ import {
   Calendar, 
   Sparkles,
   PhoneCall,
-  User
+  User,
+  ExternalLink
 } from 'lucide-react';
 import { usePlumbing } from '../context/PlumbingContext';
 
@@ -20,17 +21,20 @@ export const LiveChatWidget: React.FC = () => {
     toggleChat, 
     unreadChatCount,
     openBookingModal,
-    openEmergencyModal
+    openEmergencyModal,
+    selectedCity,
+    openWhatsApp
   } = usePlumbing();
 
   const [inputVal, setInputVal] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const quickPrompts = [
-    'Emergency burst pipe! 🚨',
-    'Water heater is not heating',
-    'Clogged main drain / hydro-jetting',
-    'Commercial backflow test quote'
+    'Emergency pipe burst! 🚨',
+    'Water motor not lifting water ⚙️',
+    'Geyser repair & fitting 🔥',
+    'Tank cleaning rates 🌊',
+    'Tap / Muslim shower repair 🚰'
   ];
 
   useEffect(() => {
@@ -69,11 +73,11 @@ export const LiveChatWidget: React.FC = () => {
               </div>
               <div>
                 <h4 className="text-sm font-bold flex items-center gap-1.5">
-                  AquaPro Support Bot
-                  <span className="text-[10px] bg-white/20 px-1.5 py-0.2 rounded font-normal">24/7 Live</span>
+                  KwikFix Live Support
+                  <span className="text-[10px] bg-white/20 px-1.5 py-0.2 rounded font-normal">{selectedCity}</span>
                 </h4>
                 <p className="text-[11px] text-sky-100">
-                  Instant plumbing triage &amp; booking assistance
+                  Instant plumbing triage &amp; rate card in PKR
                 </p>
               </div>
             </div>
@@ -86,17 +90,31 @@ export const LiveChatWidget: React.FC = () => {
             </button>
           </div>
 
+          {/* Quick WhatsApp Switch banner */}
+          <div className="bg-emerald-50 dark:bg-emerald-950/60 border-b border-emerald-200 dark:border-emerald-900 px-3 py-1.5 text-[11px] text-emerald-800 dark:text-emerald-300 flex items-center justify-between">
+            <span className="font-medium flex items-center gap-1">
+              <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+              Prefer WhatsApp?
+            </span>
+            <button
+              onClick={() => openWhatsApp('AoA KwikFix, I need customer support for plumbing.')}
+              className="font-bold text-emerald-700 dark:text-emerald-300 hover:underline flex items-center gap-1"
+            >
+              Open WhatsApp <ExternalLink className="w-3 h-3" />
+            </button>
+          </div>
+
           {/* Emergency Warning Banner inside chat */}
           <div className="bg-rose-50 dark:bg-rose-950/60 border-b border-rose-200 dark:border-rose-900 px-3 py-1.5 text-[11px] text-rose-800 dark:text-rose-300 flex items-center justify-between">
             <span className="font-medium flex items-center gap-1">
               <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
-              Active Flooding?
+              Water Pipe Burst?
             </span>
             <button
               onClick={openEmergencyModal}
               className="underline font-bold text-rose-700 dark:text-rose-200 hover:text-rose-900"
             >
-              Call Out Emergency Crew
+              45-Min Callout Form
             </button>
           </div>
 
@@ -158,7 +176,7 @@ export const LiveChatWidget: React.FC = () => {
           <form onSubmit={handleSend} className="p-2.5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center space-x-2">
             <input
               type="text"
-              placeholder="Type your plumbing issue..."
+              placeholder="Aap ko kis kaam me madad chahye?..."
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               className="flex-1 px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:outline-none"
